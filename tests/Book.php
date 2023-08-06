@@ -1,7 +1,5 @@
 <?php
 
-namespace Kiwilan\HttpPool\Tests\Medias;
-
 class Book
 {
     public function __construct(

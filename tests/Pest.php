@@ -1,12 +1,11 @@
 <?php
 
 use Illuminate\Support\Collection;
-use Kiwilan\HttpPool\Tests\Medias\Book;
 
-define('authors', __DIR__.'/medias/authors.json');
-define('authors_short', __DIR__.'/medias/authors-short.json');
-define('books_title', __DIR__.'/medias/books-title.json');
-define('books', __DIR__.'/medias/books.json');
+define('authors', __DIR__.'/data/authors.json');
+define('authors_short', __DIR__.'/data/authors-short.json');
+define('books_title', __DIR__.'/data/books-title.json');
+define('books', __DIR__.'/data/books.json');
 
 define('urls', [
     'https://ewilan-riviere.com',

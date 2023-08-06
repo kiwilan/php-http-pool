@@ -17,7 +17,7 @@
     "require": {
         "php": "^8.0",
         "guzzlehttp/guzzle": "^7.7",
-        "illuminate/support": "^10.17",
+        "illuminate/support": "^9 || ^10",
         "symfony/console": "^6.3"
     },
     "require-dev": {

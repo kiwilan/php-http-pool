@@ -1,41 +1,32 @@
-# :package_description
+# PHP HTTP Pool
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![Tests](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This package can be used as to scaffold a framework agnostic package. Follow these steps to get started:
+![Banner with cards catalog picture in background and PHP XML Reader title](https://raw.githubusercontent.com/kiwilan/php-http-pool/main/docs/banner.jpg)
 
-1. Press the "Use template" button at the top of this repo to create a new repo with the contents of this skeleton
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
+[![php][php-version-src]][php-version-href]
+[![version][version-src]][version-href]
+[![downloads][downloads-src]][downloads-href]
+[![license][license-src]][license-href]
+[![tests][tests-src]][tests-href]
+[![codecov][codecov-src]][codecov-href]
 
-## Support us
+PHP package with easy-to-use [`GuzzleHttp`](https://docs.guzzlephp.org/en/stable/quickstart.html) wrapper, works with `GuzzleHttp\Pool` and `GuzzleHttp\Client` to make concurrent requests. Built to be more flexible that Laravel [`Http`](https://laravel.com/docs/10.x/http-client#customizing-concurrent-requests) Pool. Works with Laravel [`Illuminate\Support\Collection`](https://laravel.com/docs/10.x/collections) to improve output.
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+> [!NOTE]\
+> I love `GuzzleHttp/Pool`, but I would to build a wrapper to make it easier to use and Laravel `Http/Pool` is cool but not flexible enough for me. So `HttpPool` allow you to send an `array` or a `Collection` of requests and get a `Collection` of `HttpPoolResponse` with all `GuzzleHttp` features and more.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require kiwilan/php-http-pool
 ```
 
 ## Usage
 
 ```php
-$skeleton = new VendorName\Skeleton();
-echo $skeleton->echoPhrase('Hello, VendorName!');
+$skeleton = new Kiwilan\HttpPool();
+echo $skeleton->echoPhrase('Hello, Kiwilan!');
 ```
 
 ## Testing
@@ -48,19 +39,29 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](../../contributors)
+-   [Guzzle](https://docs.guzzlephp.org/en/stable/quickstart.html) for the awesome HTTP client
+-   [Laravel](https://laravel.com/docs/10.x/http-client) for `Illuminate\Support\Collection`
+-   [Spatie](https://github.com/spatie/package-skeleton-php) for the package skeleton
+-   [Ewilan Rivière](https://github.com/kiwilan)
+-   [All Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[<img src="https://user-images.githubusercontent.com/48261459/201463225-0a5a084e-df15-4b11-b1d2-40fafd3555cf.svg" height="120rem" width="100%" />](https://github.com/kiwilan)
+
+[version-src]: https://img.shields.io/packagist/v/kiwilan/php-http-pool.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[version-href]: https://packagist.org/packages/kiwilan/php-http-pool
+[php-version-src]: https://img.shields.io/static/v1?style=flat-square&label=PHP&message=v8.0&color=777BB4&logo=php&logoColor=ffffff&labelColor=18181b
+[php-version-href]: https://www.php.net/
+[downloads-src]: https://img.shields.io/packagist/dt/kiwilan/php-http-pool.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[downloads-href]: https://packagist.org/packages/kiwilan/php-http-pool
+[license-src]: https://img.shields.io/github/license/kiwilan/php-http-pool.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[license-href]: https://github.com/kiwilan/php-http-pool/blob/main/README.md
+[tests-src]: https://img.shields.io/github/actions/workflow/status/kiwilan/php-http-pool/run-tests.yml?branch=main&label=tests&style=flat-square&colorA=18181B
+[tests-href]: https://packagist.org/packages/kiwilan/php-http-pool
+[codecov-src]: https://codecov.io/gh/kiwilan/php-http-pool/branch/main/graph/badge.svg?token=P9XIK2KV9G
+[codecov-href]: https://codecov.io/gh/kiwilan/php-http-pool

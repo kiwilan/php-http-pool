@@ -90,7 +90,7 @@ function wikipediaPageId(string $pageId): string
  */
 function objectUrls(): array
 {
-    $objects = [
+    $urls = [
         [
             'uuid' => 100,
             'name' => 'posts',
@@ -119,7 +119,7 @@ function objectUrls(): array
     ];
 
     $temp = [];
-    foreach ($objects as $object) {
+    foreach ($urls as $object) {
         $obj = new stdClass();
         $obj->id = $object['uuid'];
         $obj->name = $object['name'];

@@ -55,41 +55,65 @@ class HttpPoolResponseMetadata
         return $self;
     }
 
+    /**
+     * Get status code from Response.
+     */
     public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
+    /**
+     * Get reason from Response.
+     */
     public function getReason(): ?string
     {
         return $this->reason;
     }
 
+    /**
+     * Check if Response is success.
+     */
     public function isSuccess(): bool
     {
         return $this->isSuccess;
     }
 
+    /**
+     * Check if Response is failed.
+     */
     public function isFailed(): bool
     {
         return $this->isFailed;
     }
 
+    /**
+     * Check if Response is JSON.
+     */
     public function isJson(): bool
     {
         return $this->isJson;
     }
 
+    /**
+     * Check if Response is XML.
+     */
     public function isXml(): bool
     {
         return $this->isXml;
     }
 
+    /**
+     * Get server from Response.
+     */
     public function getServer(): ?string
     {
         return $this->server;
     }
 
+    /**
+     * Get date from Response.
+     */
     public function getDate(): DateTime
     {
         return $this->date;

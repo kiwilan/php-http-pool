@@ -16,10 +16,7 @@ class HttpPoolResponseBody
         public bool $isArray = false,
         protected bool $isXml = false,
         protected bool $isString = false,
-        protected mixed $json = null,
-        protected ?array $array = null,
-        protected ?SimpleXMLElement $xml = null,
-        protected ?string $string = null,
+        protected ?string $contents = null,
     ) {
     }
 
@@ -40,21 +37,7 @@ class HttpPoolResponseBody
         $self->isJson = $self->isValidJson($raw);
         $self->isArray = $self->isValidArray($raw);
         $self->isXml = $self->isValidXml($raw);
-        $self->string = ! empty($raw) ? $raw : null;
-
-        if ($self->isJson) {
-            $contents = json_decode($raw);
-            $self->json = $contents;
-        }
-
-        if ($self->isArray) {
-            $contents = json_decode($raw, true);
-            $self->array = $contents;
-        }
-
-        if ($self->isXml) {
-            $self->xml = simplexml_load_string($raw);
-        }
+        $self->contents = ! empty($raw) ? $raw : null;
 
         return $self;
     }
@@ -70,9 +53,9 @@ class HttpPoolResponseBody
     /**
      * Body as `string` form Guzzle.
      */
-    public function getString(): ?string
+    public function getContents(): ?string
     {
-        return $this->string;
+        return $this->contents;
     }
 
     /**
@@ -80,7 +63,13 @@ class HttpPoolResponseBody
      */
     public function getJson(): ?object
     {
-        return $this->json;
+        if ($this->isJson) {
+            $contents = json_decode($this->contents);
+
+            return $contents;
+        }
+
+        return null;
     }
 
     /**
@@ -88,17 +77,12 @@ class HttpPoolResponseBody
      */
     public function getXml(): ?SimpleXMLElement
     {
-        return $this->xml;
-    }
 
-    /**
-     * Get body.
-     *
-     * @return string|array|object|SimpleXMLElement|null
-     */
-    public function getContents(): mixed
-    {
-        return $this->json ?? $this->xml ?? $this->string;
+        if ($this->isXml) {
+            return simplexml_load_string($this->contents);
+        }
+
+        return null;
     }
 
     /**
@@ -130,11 +114,12 @@ class HttpPoolResponseBody
      */
     public function toArray(): ?array
     {
-        if (! $this->string || ! is_string($this->string)) {
+        if (! $this->contents || ! is_string($this->contents)) {
             return null;
         }
 
-        return json_decode($this->string, true);
+        return json_decode($this->contents, true);
+
     }
 
     private function isValidJson(mixed $raw): bool

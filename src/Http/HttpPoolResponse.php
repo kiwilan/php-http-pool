@@ -15,7 +15,7 @@ class HttpPoolResponse
         protected HttpPoolResponseMetadata $metadata,
         protected HttpPoolResponseBody $body,
         protected bool $success = false,
-        protected bool $bodyExists = false,
+        protected bool $bodyAvailable = false,
     ) {
     }
 
@@ -35,7 +35,7 @@ class HttpPoolResponse
             metadata: $metadata,
             success: $metadata->isSuccess(),
             body: $body,
-            bodyExists: $body->isExists(),
+            bodyAvailable: $body->isExists(),
         );
 
         return $self;
@@ -84,8 +84,8 @@ class HttpPoolResponse
     /**
      * Check if body exists.
      */
-    public function isBodyExists(): bool
+    public function isBodyAvailable(): bool
     {
-        return $this->bodyExists;
+        return $this->bodyAvailable;
     }
 }

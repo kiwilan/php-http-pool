@@ -14,7 +14,6 @@ it('can use options', function () {
     $options = $pool->getOptions();
 
     expect($item->id)->toBe(0);
-    // expect($options->poolable)->toBeTrue();
     expect($options->poolLimit)->toBe(250);
     expect($options->maxCurlHandles)->toBe(100);
     expect($options->maxRedirects)->toBe(10);
@@ -28,14 +27,13 @@ it('can use options', function () {
     expect($item->id)->toBe('https://jsonplaceholder.typicode.com/posts');
 
     $pool = HttpPool::make($urls)
-        ->setOptionPoolLimit(100)
-        ->setOptionMaxCurlHandles(50)
-        ->setOptionMaxRedirects(25)
-        ->setOptionTimeout(60)
-        ->setOptionConcurrencyMaximum(10);
+        ->setPoolLimit(100)
+        ->setMaxCurlHandles(50)
+        ->setMaxRedirects(25)
+        ->setTimeout(60)
+        ->setConcurrencyMaximum(10);
     $options = $pool->getOptions();
 
-    // expect($options->poolable)->toBeFalse();
     expect($options->poolLimit)->toBe(100);
     expect($options->maxCurlHandles)->toBe(50);
     expect($options->maxRedirects)->toBe(25);
@@ -94,14 +92,14 @@ it('can use associative array', function () {
     expect($body->isJson())->toBeTrue();
     expect($body->isXml())->toBeFalse();
     expect($body->isString())->toBeFalse();
-    expect($body->getContents())->toBeObject();
+    expect($body->getContents())->toBeString();
     expect($body->getJson())->toBeObject();
-    expect($body->getString())->toBeString();
+    expect($body->getContents())->toBeString();
     expect($body->toArray())->toBeArray();
 
     expect($body->find('searchinfo'))->toBeArray();
     expect($body->find('key'))->toBeNull();
 
     expect($item->getGuzzle())->toBeInstanceOf(Response::class);
-    expect($item->isBodyExists())->toBeTrue();
+    expect($item->isBodyAvailable())->toBeTrue();
 });

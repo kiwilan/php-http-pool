@@ -9,10 +9,22 @@
 [![tests][tests-src]][tests-href]
 [![codecov][codecov-src]][codecov-href]
 
-PHP package with easy-to-use [`GuzzleHttp`](https://docs.guzzlephp.org/en/stable/quickstart.html) pool wrapper, works with `GuzzleHttp\Pool` and `GuzzleHttp\Client` to make concurrent requests. Built to be more flexible that Laravel [`Http`](https://laravel.com/docs/10.x/http-client#customizing-concurrent-requests) Pool. Works with Laravel [`Illuminate\Support\Collection`](https://laravel.com/docs/10.x/collections) to improve output.
+PHP package with easy-to-use [`GuzzleHttp`](https://docs.guzzlephp.org/en/stable/quickstart.html) pool wrapper, works with `GuzzleHttp\Pool` and `GuzzleHttp\Client` to make concurrent requests.
 
 > [!NOTE]\
 > I love `GuzzleHttp/Pool`, but I would to build a wrapper to make it easier to use and Laravel `Http/Pool` is cool but not flexible enough for me. So `HttpPool` allow you to send an `array` or a `Collection` of requests and get a `Collection` of `HttpPoolResponse` with all `GuzzleHttp` features and more.
+>
+> Built to be more flexible that Laravel [`Http`](https://laravel.com/docs/10.x/http-client#customizing-concurrent-requests) Pool, if Laravel Pool is perfect for you, keep using it.
+
+## Features
+
+-   🚚 Works with very big pool of requests: requests chunked to avoid memory peak
+-   🗂️ Keep identifier of each request: easy to put response into original item (in case of `Collection` of `Model` with Laravel, for example)
+-   📦 `HttpPoolResponse` wrapper with some features to improve DX: original ID, body, metadata...
+-   🏡 Keep original `GuzzleHttp` response in `HttpPoolResponse`: you're in home
+-   🚨 Allow define memory peak: if you have a lot of requests
+-   🗃️ Works with simple arrays, with associative arrays, with array of objects, with Laravel [`Collection`](https://laravel.com/docs/10.x/collections): just define where to get identifier and URL
+-   💬 Optional console output: you can disable it if you don't want to see progress
 
 ## Installation
 
@@ -24,9 +36,199 @@ composer require kiwilan/php-http-pool
 
 ## Usage
 
+### Input
+
+When you want to use `HttpPool`, you have to pass an input, it could be: a simple array, an associative array, a Laravel `Collection` or an array of objects.
+
+#### With simple array
+
 ```php
-$skeleton = new Kiwilan\HttpPool();
-echo $skeleton->echoPhrase('Hello, Kiwilan!');
+// Key is the identifier, value is the URL
+// Array could be associative or not
+$urls = [
+  2 => 'https://jsonplaceholder.typicode.com/posts',
+  5 => 'https://jsonplaceholder.typicode.com/comments',
+  10 => 'https://jsonplaceholder.typicode.com/albums',
+  16 => 'https://jsonplaceholder.typicode.com/photos',
+  24 => 'https://jsonplaceholder.typicode.com/todos',
+];
+
+// Create a pool with an array of URLs and some options
+$pool = HttpPool::make($urls)
+  ->setMaxCurlHandles(100)
+  ->setMaxRedirects(10)
+  ->setTimeout(30)
+  ->setConcurrencyMaximum(5)
+  ->setPoolLimit(250)
+;
+
+$pool = $pool->execute();
+
+// Get original requests converted for `HttpPool`
+$requests = $pool->getRequests();
+
+// Get responses
+$responses = $pool->getResponses();
+
+// Get only fullfilled responses
+$fullfilled = $pool->getFullfilledResponses();
+
+// Get only rejected responses
+$rejected = $pool->getRejectedResponses();
+
+// Counts
+$fullfilledCount = $pool->getFullfilledCount();
+$rejectedCount = $pool->getRejectedCount();
+$requestCount = $pool->getRequestCount();
+
+// If all pool failed for some reasons
+$isFailed = $pool->isFailed();
+$error = $pool->getError();
+
+// Get execution time
+$executionTime = $pool->getExecutionTime();
+```
+
+#### Associative array
+
+```php
+$urls = [
+  [
+      'uuid' => 100,
+      'name' => 'posts',
+      'api' => 'https://jsonplaceholder.typicode.com/posts',
+  ],
+  [
+      'uuid' => 125,
+      'name' => 'comments',
+      'api' => 'https://jsonplaceholder.typicode.com/comments',
+  ],
+];
+
+$pool = HttpPool::make($urls)
+  ->setIdentifierKey('uuid') // Default is 'id'
+  ->setUrlKey('api') // Default is 'url'
+;
+
+$first = $pool->getResponses()->first(); // HttpPoolResponse
+$first->getId(); // 100, 125
+```
+
+#### Laravel models
+
+Take a Laravel model collection and send requests with `HttpPool`. Here `Book` is a Laravel model, we assume that `Book` has an `id` attribute and a `google_book_api` attribute.
+
+```php
+$books = Book::all();
+
+$pool = HttpPool::make($books)
+  ->setUrlKey('google_book_api') // Default is 'url'
+;
+
+$first = $pool->getResponses()->first(); // HttpPoolResponse
+$first->getId(); // 1, 2, 3... (Book ID)
+```
+
+#### Array of objects
+
+Here we take an array of objects, we assume that each object has an `uuid` attribute and an `url` attribute. You can just define getters like `getUuid()` and `getUrl()` or you can use `public` attributes, it's up to you.
+
+> [!WARNING]\
+> If attributes are `private` or `protected`, you have to define getters with logic names: `getUuid()` and `getUrl()`. You can use `uuid()` and `url()` too as getters. But here, if you create a getter `getBookUuid()`, it will not work.
+
+```php
+$urls = [
+  new Book(
+    uuid: 100,
+    name: 'posts',
+    url: 'https://jsonplaceholder.typicode.com/posts',
+  ),
+  new Book(
+    uuid: 125,
+    name: 'comments',
+    url: 'https://jsonplaceholder.typicode.com/comments',
+  ),
+];
+
+$pool = HttpPool::make($urls)
+  ->setIdentifierKey('uuid') // Default is 'id'
+;
+
+$first = $pool->getResponses()->first(); // HttpPoolResponse
+$first->getId(); // 100, 125
+```
+
+### Response
+
+After pool execution, you can get responses with `getResponses()` method. It returns a `Collection` of `HttpPoolResponse`.
+
+> [!NOTE]\
+> The first item of `getResponses` could not be the first request you sent. It depends of the response time of each request. But you can retrieve the original request with `getMetadata()->getRequest()` method, the best way to find parent is to define an ID, that you could retrieve it with `getId()` method.
+
+```php
+$responses = $pool->getResponses();
+$first = $responses->first(); // HttpPoolResponse
+
+$first->getId(); // Get original ID
+$first->getMetadata(); // Get HttpPoolResponseMetadata
+$first->getGuzzle(); // Get original GuzzleHttp\Psr7\Response
+$first->getBody(); // Get HttpPoolResponseBody
+$first->isSuccess(); // Get if response is success
+$first->isBodyAvailable(); // Get if response body exists
+```
+
+### Metadata
+
+`HttpPoolResponse` has a `HttpPoolResponseMetadata` attribute, it contains some useful data.
+
+```php
+$metadata = $first->getMetadata();
+
+$statusCode = $metadata->getStatusCode(); // 200, 404, 500...
+$reason = $metadata->getReason(); // OK, Not Found, Internal Server Error...
+$isSuccess = $metadata->isSuccess(); // 200 <= $statusCode < 300
+$isFailed = $metadata->isFailed(); // status code is not success
+$isJson = $metadata->isJson(); // is a valid JSON
+$isXml = $metadata->isXml(); // is a valid XML
+$server = $metadata->getServer(); // Server header
+$date = $metadata->getDate(); // Date header
+$contentType = $metadata->getContentType(); // Content-Type header
+$request = $metadata->getRequest(); // Original request
+$headers = $metadata->getHeaders(); // Original headers
+$header = $metadata->getHeader('Content-Type'); // Original header
+```
+
+### Body
+
+`HttpPoolResponseBody` is a wrapper of `GuzzleHttp\Psr7\Stream` with some useful methods.
+
+```php
+$body = $first->getBody();
+
+$isExists = $body->isExists(); // Get if body exists
+$contents = $body->getContents(); // Get body contents
+$json = $body->getJson(); // Get body as JSON
+$xml = $body->getXml(); // Get body as XML
+$isJson = $body->isJson(); // Get if body is a valid JSON
+$isXml = $body->isXml(); // Get if body is a valid XML
+$isString = $body->isString(); // Get if body is a string
+$toArray = $body->toArray(); // Get body as array
+```
+
+### Advanced
+
+You can use some advanced options to customize your pool.
+
+```php
+$pool = HttpPool::make($urls)
+  ->setUrlAsIdentifier() // Use URL as identifier to replace ID
+  ->disallowPrintConsole() // Disable console output
+;
+
+$pool = HttpPool::make($urls)
+  ->allowMemoryPeak() // Allow memory peak if you have a lot of requests
+  ->setMaximumMemory('10G') // Define memory peak, `allowMemoryPeak` must be set to `true`
+;
 ```
 
 ## Testing
@@ -43,6 +245,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 -   [Guzzle](https://docs.guzzlephp.org/en/stable/quickstart.html) for the awesome HTTP client
 -   [Laravel](https://laravel.com/docs/10.x/http-client) for `Illuminate\Support\Collection`
+-   [Symfony](https://symfony.com/) for `symfony/console`
 -   [Spatie](https://github.com/spatie/package-skeleton-php) for the package skeleton
 -   [Ewilan Rivière](https://github.com/kiwilan)
 -   [All Contributors](../../contributors)
@@ -55,7 +258,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 [version-src]: https://img.shields.io/packagist/v/kiwilan/php-http-pool.svg?style=flat-square&colorA=18181B&colorB=777BB4
 [version-href]: https://packagist.org/packages/kiwilan/php-http-pool
-[php-version-src]: https://img.shields.io/static/v1?style=flat-square&label=PHP&message=v8.0&color=777BB4&logo=php&logoColor=ffffff&labelColor=18181b
+[php-version-src]: https://img.shields.io/static/v1?style=flat-square&label=PHP&message=v8.1&color=777BB4&logo=php&logoColor=ffffff&labelColor=18181b
 [php-version-href]: https://www.php.net/
 [downloads-src]: https://img.shields.io/packagist/dt/kiwilan/php-http-pool.svg?style=flat-square&colorA=18181B&colorB=777BB4
 [downloads-href]: https://packagist.org/packages/kiwilan/php-http-pool
@@ -63,5 +266,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [license-href]: https://github.com/kiwilan/php-http-pool/blob/main/README.md
 [tests-src]: https://img.shields.io/github/actions/workflow/status/kiwilan/php-http-pool/run-tests.yml?branch=main&label=tests&style=flat-square&colorA=18181B
 [tests-href]: https://packagist.org/packages/kiwilan/php-http-pool
-[codecov-src]: https://codecov.io/gh/kiwilan/php-http-pool/branch/main/graph/badge.svg?token=P9XIK2KV9G
+[codecov-src]: https://codecov.io/gh/kiwilan/php-http-pool/branch/main/graph/badge.svg?token=XS5AOVD4MK
 [codecov-href]: https://codecov.io/gh/kiwilan/php-http-pool

@@ -67,7 +67,7 @@ class HttpPool
     /**
      * Set option max curl handles, default is `100`.
      */
-    public function setOptionMaxCurlHandles(int $maximum = 100): self
+    public function setMaxCurlHandles(int $maximum = 100): self
     {
         $this->options->maxCurlHandles = $maximum;
 
@@ -77,7 +77,7 @@ class HttpPool
     /**
      * Set option max redirects, default is `10`.
      */
-    public function setOptionMaxRedirects(int $maximum = 10): self
+    public function setMaxRedirects(int $maximum = 10): self
     {
         $this->options->maxRedirects = $maximum;
 
@@ -87,7 +87,7 @@ class HttpPool
     /**
      * Set option timeout, default is `30`.
      */
-    public function setOptionTimeout(int $timeout = 30): self
+    public function setTimeout(int $timeout = 30): self
     {
         $this->options->timeout = $timeout;
 
@@ -97,7 +97,7 @@ class HttpPool
     /**
      * Set option concurrency, default is `5`.
      */
-    public function setOptionConcurrencyMaximum(int $maximum = 5): self
+    public function setConcurrencyMaximum(int $maximum = 5): self
     {
         $this->options->concurrencyMaximum = $maximum;
 
@@ -107,7 +107,7 @@ class HttpPool
     /**
      * Set option Pool limit, default is `250`.
      */
-    public function setOptionPoolLimit(int $limit = 250): self
+    public function setPoolLimit(int $limit = 250): self
     {
         $this->options->poolLimit = $limit;
 

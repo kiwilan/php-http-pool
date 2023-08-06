@@ -9,7 +9,7 @@
 [![tests][tests-src]][tests-href]
 [![codecov][codecov-src]][codecov-href]
 
-PHP package with easy-to-use [`GuzzleHttp`](https://docs.guzzlephp.org/en/stable/quickstart.html) wrapper, works with `GuzzleHttp\Pool` and `GuzzleHttp\Client` to make concurrent requests. Built to be more flexible that Laravel [`Http`](https://laravel.com/docs/10.x/http-client#customizing-concurrent-requests) Pool. Works with Laravel [`Illuminate\Support\Collection`](https://laravel.com/docs/10.x/collections) to improve output.
+PHP package with easy-to-use [`GuzzleHttp`](https://docs.guzzlephp.org/en/stable/quickstart.html) pool wrapper, works with `GuzzleHttp\Pool` and `GuzzleHttp\Client` to make concurrent requests. Built to be more flexible that Laravel [`Http`](https://laravel.com/docs/10.x/http-client#customizing-concurrent-requests) Pool. Works with Laravel [`Illuminate\Support\Collection`](https://laravel.com/docs/10.x/collections) to improve output.
 
 > [!NOTE]\
 > I love `GuzzleHttp/Pool`, but I would to build a wrapper to make it easier to use and Laravel `Http/Pool` is cool but not flexible enough for me. So `HttpPool` allow you to send an `array` or a `Collection` of requests and get a `Collection` of `HttpPoolResponse` with all `GuzzleHttp` features and more.

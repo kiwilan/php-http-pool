@@ -1,9 +1,14 @@
 {
     "name": "kiwilan/php-http-pool",
-    "description": "This is my package php-http-pool",
+    "description": "PHP package with easy-to-use GuzzleHttp pool wrapper to make concurrent requests.",
     "keywords": [
         "kiwilan",
-        "php-http-pool"
+        "php",
+        "http",
+        "guzzle",
+        "pool",
+        "concurrency",
+        "requests"
     ],
     "homepage": "https://github.com/kiwilan/php-http-pool",
     "license": "MIT",
@@ -15,10 +20,10 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "guzzlehttp/guzzle": "^7.7",
-        "illuminate/support": "^9 || ^10",
-        "symfony/console": "^5 || ^6"
+        "illuminate/support": "^10",
+        "symfony/console": "^6"
     },
     "require-dev": {
         "pestphp/pest": "^1.20",

@@ -62,6 +62,7 @@ $pool = HttpPool::make($urls)
   ->setPoolLimit(250)
 ;
 
+// Execute pool
 $pool = $pool->execute();
 
 // Get original requests converted for `HttpPool`
@@ -108,6 +109,7 @@ $urls = [
 $pool = HttpPool::make($urls)
   ->setIdentifierKey('uuid') // Default is 'id'
   ->setUrlKey('api') // Default is 'url'
+  ->execute()
 ;
 
 $first = $pool->getResponses()->first(); // HttpPoolResponse
@@ -123,6 +125,7 @@ $books = Book::all();
 
 $pool = HttpPool::make($books)
   ->setUrlKey('google_book_api') // Default is 'url'
+  ->execute()
 ;
 
 $first = $pool->getResponses()->first(); // HttpPoolResponse
@@ -152,6 +155,7 @@ $urls = [
 
 $pool = HttpPool::make($urls)
   ->setIdentifierKey('uuid') // Default is 'id'
+  ->execute()
 ;
 
 $first = $pool->getResponses()->first(); // HttpPoolResponse

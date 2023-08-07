@@ -86,6 +86,9 @@ $rejectedCount = $execute->getRejectedCount();
 
 // Get execution time
 $executionTime = $execute->getExecutionTime();
+
+// Get pool instance
+$pool = $execute->getPool();
 ```
 
 #### Associative array

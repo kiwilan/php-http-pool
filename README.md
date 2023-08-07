@@ -12,7 +12,7 @@
 PHP package with easy-to-use [`GuzzleHttp`](https://docs.guzzlephp.org/en/stable/quickstart.html) pool wrapper, works with `GuzzleHttp\Pool` and `GuzzleHttp\Client` to make concurrent requests.
 
 > [!NOTE]\
-> I love `GuzzleHttp/Pool`, but I would to build a wrapper to make it easier to use and Laravel `Http/Pool` is cool but not flexible enough for me. So `HttpPool` allow you to send an `array` or a `Collection` of requests and get a `Collection` of `HttpPoolResponse` with all `GuzzleHttp` features and more.
+> I love `GuzzleHttp\Pool`, but I would to build a wrapper to make it easier to use and Laravel `Http\Pool` is cool but not flexible enough for me. So `HttpPool` allow you to send an `array` or a `Collection` of requests and get a `Collection<mixed, HttpPoolResponse>` of with all `GuzzleHttp` features and more.
 >
 > Built to be more flexible that Laravel [`Http`](https://laravel.com/docs/10.x/http-client#customizing-concurrent-requests) Pool, if Laravel Pool is perfect for you, keep using it.
 
@@ -43,6 +43,8 @@ When you want to use `HttpPool`, you have to pass an input, it could be: a simpl
 #### With simple array
 
 ```php
+use Kiwilan\HttpPool\HttpPool;
+
 // Key is the identifier, value is the URL
 // Array could be associative or not
 $urls = [
@@ -62,28 +64,28 @@ $pool = HttpPool::make($urls)
   ->setPoolLimit(250)
 ;
 
-// Execute pool
-$pool = $pool->execute();
-
 // Get original requests converted for `HttpPool`
 $requests = $pool->getRequests();
-
-// Get responses
-$responses = $pool->getResponses();
-
-// Get only fullfilled responses
-$fullfilled = $pool->getFullfilledResponses();
-
-// Get only rejected responses
-$rejected = $pool->getRejectedResponses();
-
-// Counts
-$fullfilledCount = $pool->getFullfilledCount();
-$rejectedCount = $pool->getRejectedCount();
 $requestCount = $pool->getRequestCount();
 
+// Execute pool
+$execute = $pool->execute();
+
+// Get responses
+$responses = $execute->getResponses();
+
+// Get only fullfilled responses
+$fullfilled = $execute->getFullfilledResponses();
+
+// Get only rejected responses
+$rejected = $execute->getRejectedResponses();
+
+// Counts
+$fullfilledCount = $execute->getFullfilledCount();
+$rejectedCount = $execute->getRejectedCount();
+
 // Get execution time
-$executionTime = $pool->getExecutionTime();
+$executionTime = $execute->getExecutionTime();
 ```
 
 #### Associative array
@@ -92,6 +94,8 @@ $executionTime = $pool->getExecutionTime();
 > Identifier and URL have to not be nested.
 
 ```php
+use Kiwilan\HttpPool\HttpPool;
+
 $urls = [
   [
       'uuid' => 100,
@@ -120,6 +124,9 @@ $first->getId(); // 100, 125
 Take a Laravel model collection and send requests with `HttpPool`. Here `Book` is a Laravel model, we assume that `Book` has an `id` attribute and a `google_book_api` attribute.
 
 ```php
+use App\Models\Book;
+use Kiwilan\HttpPool\HttpPool;
+
 $books = Book::all();
 
 $pool = HttpPool::make($books)
@@ -139,6 +146,8 @@ Here we take an array of objects, we assume that each object has an `uuid` attri
 > If attributes are `private` or `protected`, you have to define getters with logic names: `getUuid()` and `getUrl()`. You can use `uuid()` and `url()` too as getters. But here, if you create a getter `getBookUuid()`, it will not work.
 
 ```php
+use Kiwilan\HttpPool\HttpPool;
+
 $urls = [
   new Book(
     uuid: 100,
@@ -166,6 +175,8 @@ $first->getId(); // 100, 125
 To execute pool, you can use `execute()` method.
 
 ```php
+use Kiwilan\HttpPool\HttpPool;
+
 $pool = HttpPool::make($urls);
 $execute = $pool->execute();
 ```
@@ -173,6 +184,8 @@ $execute = $pool->execute();
 `execute()` method returns a `HttpPoolExecuted` object. You can get pool with `getPool()` method.
 
 ```php
+use Kiwilan\HttpPool\HttpPool;
+
 $pool = HttpPool::make($urls);
 $execute = $pool->execute();
 
@@ -182,6 +195,8 @@ $pool = $execute->getPool();
 In `HttpPoolExecuted` object, you can get responses and more features. All methods `getResponses()`,`getFullfilled()`, `getRejected()` are `Illuminate\Support\Collection` of `HttpPoolResponse`.
 
 ```php
+use Kiwilan\HttpPool\HttpPool;
+
 $pool = HttpPool::make($urls);
 $execute = $pool->execute();
 
@@ -210,6 +225,8 @@ $errors = $execute->getErrors();
 To handle errors, you can just use `HttpPool::make()` method and errors will throw exceptions. But if you want to prevent errors, you can use `throwErrors` param.
 
 ```php
+use Kiwilan\HttpPool\HttpPool;
+
 $pool = HttpPool::make($urls, throwErrors: false);
 ```
 
@@ -290,15 +307,28 @@ $toArray = $body->toArray(); // Get body as array
 
 You can use some advanced options to customize your pool.
 
-```php
-$pool = HttpPool::make($urls)
-  ->setUrlAsIdentifier() // Use URL as identifier to replace ID
-  ->allowPrintConsole() // Disable console output
-;
+Use URL as identifier to replace ID.
 
-$pool = HttpPool::make($urls)
-  ->allowMemoryPeak('10G') // Allow memory peak if you have a lot of requests
-;
+```php
+HttpPool::make($urls)->setUrlAsIdentifier();
+```
+
+Enable console output.
+
+```php
+HttpPool::make($urls)->allowPrintConsole();
+```
+
+#### Memory peak
+
+Handle memory peak is optional, but if you have a lot of requests, you can define a memory peak to avoid memory peak. Just call `HttpPool::resetMemory()` after pool execution and treatment of responses.
+
+```php
+$pool = HttpPool::make($urls)->allowMemoryPeak('2G');
+$execute = $pool->execute();
+
+// After pool execution and treatment of responses
+HttpPool::resetMemory();
 ```
 
 ## Testing

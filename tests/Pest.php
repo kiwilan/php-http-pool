@@ -8,10 +8,10 @@ define('books_title', __DIR__.'/data/books-title.json');
 define('books', __DIR__.'/data/books.json');
 
 define('urls', [
-    'https://ewilan-riviere.com',
-    'https://bookshelves.ink',
+    'https://www.youtube.com/',
+    'https://www.nexusmods.com/',
     'https://github.com',
-    'https://gitlab.com',
+    'https://discord.com/',
     'https://spotify.com',
 ]);
 define('fake_urls', [
@@ -121,11 +121,11 @@ function objectUrls(): array
     $temp = [];
     foreach ($urls as $object) {
         $obj = new stdClass();
-        $obj->id = $object['uuid'];
+        $obj->uuid = $object['uuid'];
         $obj->name = $object['name'];
         $obj->api = $object['api'];
 
-        $temp[$obj->id] = $obj;
+        $temp[$obj->uuid] = $obj;
     }
 
     return $temp;

@@ -165,4 +165,10 @@ it('can use collection classes', function () {
     $item = $responses->getResponses()->first();
 
     expect($item->getId())->toBeIn([100, 125, 150, 175, 200]);
+
+    $posts = $responses->getResponses()->filter(fn (HttpPoolResponse $response) => $response->getId() === 100)->first();
+    expect($posts->getMetadata()->getRequest())->toBe('https://jsonplaceholder.typicode.com/posts');
+
+    $posts = $responses->getResponses()->filter(fn (HttpPoolResponse $response) => $response->getId() === 125)->first();
+    expect($posts->getMetadata()->getRequest())->toBe('https://jsonplaceholder.typicode.com/comments');
 });

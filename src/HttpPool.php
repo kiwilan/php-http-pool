@@ -28,7 +28,7 @@ class HttpPool
         public ?array $errors = null,
         //
         protected bool $isAllowMemoryPeak = false,
-        protected string $maximumMemory = '10G',
+        protected string $maximumMemory = '2G',
         protected bool $isAllowThrowErrors = true,
     ) {
     }
@@ -51,6 +51,16 @@ class HttpPool
         $self->requests = $self->transformRequests($requests);
 
         return $self;
+    }
+
+    /**
+     * Use this method if you allow memory peak with `allowMemoryPeak()`.
+     *
+     * Reset memory limit.
+     */
+    public static function resetMemory(): void
+    {
+        ini_restore('memory_limit');
     }
 
     /**
@@ -150,10 +160,11 @@ class HttpPool
      * WARNING: This option can be dangerous.
      * Allow memory peak, default is `false`.
      *
+     * After execution, you have to use `HttpPool::resetMemory()` to reset memory limit.
      * If you set very high concurrency or requests with big responses, you can set this option.
-     * Default maximum memory is `10G`.
+     * Default maximum memory is `2G`.
      */
-    public function allowMemoryPeak(string $maximum = '10G'): self
+    public function allowMemoryPeak(string $maximum = '2G'): self
     {
         $this->isAllowMemoryPeak = true;
         $this->maximumMemory = $maximum;
@@ -238,10 +249,6 @@ class HttpPool
 
             $fullfilled = $responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess());
             $rejected = $responses->filter(fn (HttpPoolResponse $response) => ! $response->isSuccess());
-
-            if ($this->isAllowMemoryPeak) {
-                ini_restore('memory_limit');
-            }
         } catch (\Throwable $th) {
             $this->error('Pool execution failed', 'execute()', $th);
         }

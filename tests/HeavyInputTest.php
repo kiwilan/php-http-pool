@@ -17,9 +17,9 @@ it('can use heavy input', function () {
         ->setUrlKey('wikipedia')
         ->setPoolLimit(100)
         ->allowPrintConsole();
-    $pool = $pool->execute();
+    $responses = $pool->execute();
 
-    expect($pool->getFullfilledCount())->toBe(244);
+    expect($responses->getFullfilledCount())->toBe(244);
 });
 
 it('can use very heavy input', function () {
@@ -38,7 +38,7 @@ it('can use very heavy input', function () {
         ->allowMemoryPeak()
         ->setPoolLimit(500)
         ->allowPrintConsole();
-    $pool = $pool->execute();
+    $responses = $pool->execute();
 
-    expect($pool->getFullfilledCount())->toBe(1639);
+    expect($responses->getFullfilledCount())->toBe(1639);
 });

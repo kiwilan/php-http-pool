@@ -2,6 +2,10 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## 0.2.1 - 2023-08-07
+
+- remove `allowMemoryPeak` replaced with `HttpPool::handleMemoryPeak`
+
 ## 0.2.0 - 2023-08-07
 
 ### BREAKING CHANGES

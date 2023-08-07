@@ -1,7 +1,7 @@
 <?php
 
-use Kiwilan\HttpPool\Http\HttpPoolResponse;
 use Kiwilan\HttpPool\HttpPool;
+use Kiwilan\HttpPool\Response\HttpPoolResponse;
 
 it('can handle urls', function () {
     $urls = urls;
@@ -67,7 +67,7 @@ it('can handle fake urls', function () {
 it('can use objects', function () {
     $urls = objectUrls();
 
-    $pool = HttpPool::make($urls)
+    $pool = HttpPool::make($urls, false)
         ->setIdentifierKey('uuid')
         ->setUrlKey('api');
     $pool = $pool->execute();
@@ -79,6 +79,14 @@ it('can use objects', function () {
     $item = $pool->getResponses()->first();
 
     expect($item->getId())->toBeIn([100, 125, 150, 175, 200]);
+});
+
+it('can use empty array', function () {
+    $urls = [];
+
+    $pool = HttpPool::make($urls);
+
+    expect(fn () => $pool->execute())->toThrow(\Exception::class);
 });
 
 it('can use collection', function () {
@@ -133,13 +141,13 @@ it('can use xml body', function () {
 it('can handle failed', function () {
     $urls = collectionFailed();
 
-    $pool = HttpPool::make($urls);
+    $pool = HttpPool::make($urls, false);
     $pool = $pool->execute();
 
     expect($pool->getRequestCount())->toBe(5);
 
     expect($pool->isFailed())->toBeTrue();
-    expect($pool->getError())->toBeString();
+    expect($pool->getErrors())->toBeArray();
 });
 
 it('can use collection classes', function () {

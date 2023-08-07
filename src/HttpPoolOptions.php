@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiwilan\HttpPool\Http;
+namespace Kiwilan\HttpPool;
 
 /**
  * HttpPoolOptions to set options for HttpPool.

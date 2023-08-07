@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiwilan\HttpPool\Http;
+namespace Kiwilan\HttpPool\Request;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\CurlFactory;
@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Collection;
+use Kiwilan\HttpPool\HttpPoolOptions;
 use Kiwilan\HttpPool\Utils\PrintConsole;
 
 /**
@@ -19,7 +20,7 @@ use Kiwilan\HttpPool\Utils\PrintConsole;
 class HttpPoolRequest
 {
     /**
-     * @param  Collection<string,string>  $requests
+     * @param  Collection<string,HttpPoolRequestItem>  $requests
      * @param  Collection<string,Response>  $fullfilled
      * @param  Collection<string,Response>  $rejected
      * @param  Collection<string,Response>  $all
@@ -40,7 +41,7 @@ class HttpPoolRequest
     /**
      * Create a HttpPoolRequest instance.
      *
-     * @param  Collection<string,string>  $requests
+     * @param  Collection<string,HttpPoolRequestItem>  $requests
      */
     public static function make(iterable $requests, HttpPoolOptions $options): self
     {
@@ -88,6 +89,8 @@ class HttpPoolRequest
     }
 
     /**
+     * Only rejected responses.
+     *
      * @return Collection<string,Response>
      */
     public function getRejected(): Collection
@@ -96,6 +99,8 @@ class HttpPoolRequest
     }
 
     /**
+     * All responses.
+     *
      * @return Collection<string,Response>
      */
     public function getAll(): Collection
@@ -103,15 +108,18 @@ class HttpPoolRequest
         return $this->all;
     }
 
+    /**
+     * Get execution time.
+     */
     public function getExecutionTime(): float
     {
         return $this->executionTime;
     }
 
     /**
-     * Execute requests with Guzzle Pool.
+     * Prepare requests to be executed.
      *
-     * @param  Collection<int,string>  $urls
+     * @param  Collection<int,HttpPoolRequestItem>  $urls
      */
     private function execute(Collection $urls)
     {
@@ -123,7 +131,7 @@ class HttpPoolRequest
         $urls_count = count($urls);
 
         /**
-         * @var Collection<int,Collection<int,string>> $chunks
+         * @var Collection<int,Collection<int,HttpPoolRequestItem>> $chunks
          */
         $chunks = $urls->chunk($this->options->poolLimit);
 
@@ -132,14 +140,10 @@ class HttpPoolRequest
         $start_time = microtime(true);
 
         if ($urls_count > 0) {
-            $firstUrl = $urls->first();
-            $domain = parse_url($firstUrl, PHP_URL_HOST);
+            $firstItem = $urls->first();
+            $domain = parse_url($firstItem->url, PHP_URL_HOST);
             $console->newLine();
-            $console->print("  HttpService pool {$domain} with async requests...", 'bright-blue');
-
-            // if (! $this->options->poolable) {
-            //     $console->print('  Pool is disabled!', 'red');
-            // }
+            $console->print("  HttpPool {$domain} with async requests...", 'bright-blue');
             $console->print("  Pool is limited to {$this->options->poolLimit} from options, {$urls_count} requests will be converted into {$chunks_size} chunks.");
         }
 
@@ -147,12 +151,12 @@ class HttpPoolRequest
         $rejected = collect([]);
         $all = collect([]);
 
-        foreach ($chunks as $chunk_key => $chunk_urls) {
-            $chunk_urls_count = count($chunk_urls);
+        foreach ($chunks as $chunk_key => $chunk_items) {
+            $chunk_items_count = count($chunk_items);
             $current_chunk = $chunk_key + 1;
-            $console->print("  Execute {$chunk_urls_count} requests from chunk {$current_chunk}/{$chunks_size}...");
+            $console->print("  Execute {$chunk_items_count} requests from chunk {$current_chunk}/{$chunks_size}...");
 
-            $res = $this->pool($chunk_urls);
+            $res = $this->pool($chunk_items);
 
             $fullfilled = $fullfilled->merge($res->get('fullfilled'));
             $rejected = $rejected->merge($res->get('rejected'));
@@ -177,9 +181,9 @@ class HttpPoolRequest
     }
 
     /**
-     * Create and make `GET` requests from `$urls`.
+     * Execute requests with Guzzle pool.
      *
-     * @param  Collection<int,string>  $urls
+     * @param  Collection<int,HttpPoolRequestItem>  $urls
      * @return Collection<string,mixed>
      */
     private function pool(Collection $urls): Collection
@@ -218,9 +222,9 @@ class HttpPoolRequest
         // Prepare requests with `id` and `url`.
         $requests = [];
 
-        foreach ($urls as $id => $url) {
-            if ($url) {
-                $requests[$id] = new Request('GET', $url);
+        foreach ($urls as $item) {
+            if ($item->url) {
+                $requests[$item->id] = new Request('GET', $item->url);
             }
         }
 
@@ -234,20 +238,20 @@ class HttpPoolRequest
         $pool = new Pool($client, $requests, [
             'concurrency' => $this->options->concurrencyMaximum,
             'fulfilled' => function (Response $response, $index) use ($fullfilled, $urls) {
-                $response = $response->withHeader('Origin', $urls[$index] ?? null); // Add Origin header for URL
+                $response = $response->withHeader('Origin', $urls->get($index)->url ?? null); // Add Origin header for URL
                 $response = $response->withHeader('ID', $index ?? null);
                 $fullfilled->put($index, $response);
 
                 $this->fullfilledCount++;
             },
             'rejected' => function (mixed $reason, $index) use ($fullfilled, $rejected, $urls) {
-                $type = json_encode([$reason, $index, $urls[$index]]);
+                $type = json_encode([$reason, $index, $urls->get($index)?->url]);
                 $message = "HttpPool: one request rejected. {$type}";
                 error_log($message);
                 $response = new Response(
                     status: 500,
                     headers: [
-                        'Origin' => $urls[$index] ?? null,
+                        'Origin' => $urls->get($index)?->url ?? null,
                         'ID' => $index ?? null,
                     ],
                     reason: $reason,

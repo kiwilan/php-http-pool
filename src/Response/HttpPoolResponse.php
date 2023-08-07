@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiwilan\HttpPool\Http;
+namespace Kiwilan\HttpPool\Response;
 
 use GuzzleHttp\Psr7\Response;
 

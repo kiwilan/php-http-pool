@@ -82,10 +82,6 @@ $fullfilledCount = $pool->getFullfilledCount();
 $rejectedCount = $pool->getRejectedCount();
 $requestCount = $pool->getRequestCount();
 
-// If all pool failed for some reasons
-$isFailed = $pool->isFailed();
-$error = $pool->getError();
-
 // Get execution time
 $executionTime = $pool->getExecutionTime();
 ```
@@ -163,6 +159,22 @@ $pool = HttpPool::make($urls)
 
 $first = $pool->getResponses()->first(); // HttpPoolResponse
 $first->getId(); // 100, 125
+```
+
+### Errors
+
+To handle errors, you can just use `HttpPool::make()` method and errors will throw exceptions. But if you want to prevent errors, you can use `throwErrors` param.
+
+```php
+$pool = HttpPool::make($urls, throwErrors: false);
+```
+
+All errors can be found in `getErrors()` method.
+
+```php
+// If all pool failed for some reasons
+$isFailed = $pool->isFailed();
+$errors = $pool->getErrors();
 ```
 
 ### Response

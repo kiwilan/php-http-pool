@@ -3,18 +3,19 @@
 namespace Kiwilan\HttpPool;
 
 use Illuminate\Support\Collection;
-use Kiwilan\HttpPool\Http\HttpPoolOptions;
-use Kiwilan\HttpPool\Http\HttpPoolRequest;
-use Kiwilan\HttpPool\Http\HttpPoolResponse;
-use stdClass;
+use Kiwilan\HttpPool\Request\HttpPoolRequest;
+use Kiwilan\HttpPool\Request\HttpPoolRequestItem;
+use Kiwilan\HttpPool\Response\HttpPoolResponse;
+use ReflectionProperty;
+use Throwable;
 
 class HttpPool
 {
     /**
-     * @param  Collection<string,mixed>  $requests
-     * @param  Collection<string,HttpPoolResponse>  $responses
-     * @param  Collection<string,HttpPoolResponse>  $rejected
-     * @param  Collection<string,HttpPoolResponse>  $fullfilled
+     * @param  Collection<mixed,HttpPoolRequestItem>  $requests
+     * @param  Collection<mixed,HttpPoolResponse>  $responses
+     * @param  Collection<mixed,HttpPoolResponse>  $rejected
+     * @param  Collection<mixed,HttpPoolResponse>  $fullfilled
      */
     protected function __construct(
         protected iterable $requestsOrigin,
@@ -35,10 +36,11 @@ class HttpPool
         public bool $isExecuted = false,
         public bool $isRaw = false,
         public bool $isFailed = true,
-        public ?string $error = null,
+        public ?array $errors = null,
         protected ?float $executionTime = null,
         protected bool $isAllowMemoryPeak = false,
         protected string $maximumMemory = '10G',
+        protected bool $isAllowThrowErrors = true,
     ) {
     }
 
@@ -47,7 +49,7 @@ class HttpPool
      *
      * @param  iterable  $requests Can be `string[]`, `mixed[]`, `array<mixed, mixed>`, `array`, `Collection`, `Collection<int,object>`
      */
-    public static function make(iterable $requests): self
+    public static function make(iterable $requests, bool $throwErrors = true): self
     {
         $self = new self(
             requestsOrigin: $requests,
@@ -57,6 +59,7 @@ class HttpPool
             rejected: collect([]),
             fullfilled: collect([]),
             requests: collect([]),
+            isAllowThrowErrors: $throwErrors,
         );
 
         $self->requests = $self->transformRequests($requests);
@@ -148,7 +151,7 @@ class HttpPool
     }
 
     /**
-     * Disallow print console, default is `true`.
+     * Allow print console, default is `false`.
      */
     public function allowPrintConsole(): self
     {
@@ -175,7 +178,7 @@ class HttpPool
     /**
      * Get requests.
      *
-     * @return Collection<string,mixed>
+     * @return Collection<mixed,HttpPoolRequestItem>
      */
     public function getRequests(): Collection
     {
@@ -185,7 +188,7 @@ class HttpPool
     /**
      * Get fullfilled responses.
      *
-     * @return Collection<string,HttpPoolResponse>
+     * @return Collection<mixed,HttpPoolResponse>
      */
     public function getFullfilled(): Collection
     {
@@ -195,7 +198,7 @@ class HttpPool
     /**
      * Get rejected responses.
      *
-     * @return Collection<string,HttpPoolResponse>
+     * @return Collection<mixed,HttpPoolResponse>
      */
     public function getRejected(): Collection
     {
@@ -205,7 +208,7 @@ class HttpPool
     /**
      * All responses, including rejected.
      *
-     * @return Collection<string,HttpPoolResponse>
+     * @return Collection<mixed,HttpPoolResponse>
      */
     public function getResponses(): Collection
     {
@@ -269,11 +272,11 @@ class HttpPool
     }
 
     /**
-     * Get error message.
+     * Get error messages.
      */
-    public function getError(): ?string
+    public function getErrors(): ?array
     {
-        return $this->error;
+        return $this->errors;
     }
 
     /**
@@ -289,11 +292,15 @@ class HttpPool
      */
     public function execute(): self
     {
-        $urls = $this->prepareRequests();
-        if ($urls->isEmpty()) {
+        foreach ($this->requests as $request) {
+            if ($request->url === null) {
+                $this->error("Cannot find url for `{$request->id}`", 'execute()');
+            }
+        }
+
+        if ($this->requests->isEmpty()) {
             $this->isExecuted = true;
-            $this->isFailed = true;
-            $this->error = "No requests to execute, input array can be empty or doesn't have `{$this->urlKey}` key";
+            $this->error("No requests to execute, input array can be empty or doesn't have `{$this->urlKey}` key", 'execute()');
 
             return $this;
         }
@@ -303,7 +310,7 @@ class HttpPool
                 ini_set('memory_limit', "{$this->maximumMemory}");
             }
 
-            $pool = HttpPoolRequest::make($urls, $this->options);
+            $pool = HttpPoolRequest::make($this->requests, $this->options);
 
             $this->responses = $this->toHttpPoolResponse($pool->getAll());
 
@@ -318,65 +325,10 @@ class HttpPool
                 ini_restore('memory_limit');
             }
         } catch (\Throwable $th) {
-            throw new \Exception("Pool execution failed: {$th->getMessage()}");
+            $this->error('Pool execution failed', 'execute()', $th);
         }
 
         return $this;
-    }
-
-    /**
-     * Prepare requests.
-     *
-     * @return Collection<string,string>
-     */
-    private function prepareRequests(): Collection
-    {
-        /** @var Collection<string, string> */
-        $urls = collect([]);
-
-        foreach ($this->requests as $key => $item) {
-            if (! $item) {
-                continue;
-            }
-
-            $identifierKey = $this->identifierKey;
-            $urlKey = $this->urlKey;
-
-            if ($this->isRaw) {
-                $identifierKey = 'id';
-                $urlKey = 'url';
-            }
-
-            $identifier = null;
-
-            if (method_exists($item, 'get'.ucfirst($identifierKey))) {
-                $identifier = $item->{'get'.ucfirst($identifierKey)}();
-            } elseif (method_exists($item, $identifierKey)) {
-                $identifier = $item->{$identifierKey}();
-            } elseif (property_exists($item, $identifierKey)) {
-                $identifier = $item->{$identifierKey};
-            }
-
-            $url = null;
-
-            if (method_exists($item, 'get'.ucfirst($urlKey))) {
-                $url = $item->{'get'.ucfirst($urlKey)}();
-            } elseif (method_exists($item, $urlKey)) {
-                $url = $item->{$urlKey}();
-            } elseif (property_exists($item, $urlKey)) {
-                $url = $item->{$urlKey};
-            }
-
-            if (! $identifier) {
-                $identifier = $key;
-            }
-
-            if ($url) {
-                $urls->put($identifier, $url);
-            }
-        }
-
-        return $urls;
     }
 
     /**
@@ -399,69 +351,88 @@ class HttpPool
         return $list;
     }
 
-    private function transformRequests(mixed $requests): mixed
-    {
-        if (! is_iterable($requests)) {
-            throw new \Exception('`$requests` must be an iterable');
-        }
-
-        $parsed = null;
-
-        if ($requests instanceof Collection && is_object($requests->first())) {
-            $parsed = $requests;
-        } else {
-            $parsed = $this->transformArrauRequests($requests);
-        }
-
-        return $parsed;
-    }
-
     /**
-     * Transform Collection input to Collection of objects with `model_id` and `url` properties.
+     * Transform Collection input to Collection of objects with `id` and `url` properties.
      *
      * @param  Collection<int, mixed>|string[]  $iterable
-     * @return Collection<int, object>
+     * @return Collection<mixed, HttpPoolRequestItem>
      */
-    private function transformArrauRequests(mixed $iterable): Collection
+    private function transformRequests(mixed $iterable): Collection
     {
-        /** @var Collection<int,object> */
+        if (! is_iterable($iterable)) {
+            $this->error('`make(iterable $requests)` => `$requests` must be an iterable', 'transformRequests()');
+        }
+
+        /** @var Collection<mixed,HttpPoolRequestItem> */
         $requests = collect([]);
         $this->isRaw = true;
 
         foreach ($iterable as $key => $item) {
-            $id = $key;
-            if (is_array($item) && array_key_exists($this->identifierKey, $item)) {
-                $id = $item[$this->identifierKey];
-            } elseif (is_object($item) && property_exists($item, $this->identifierKey)) {
-                $id = $item->{$this->identifierKey};
-            } elseif (is_string($item)) {
-                if ($this->urlAsIdentifier) {
-                    $id = $item;
-                } else {
-                    $id = $key;
-                }
+            $id = $this->findKey($this->identifierKey, $item, $key);
+            if ($this->urlAsIdentifier) {
+                $id = $item;
             }
 
-            $url = null;
-            if (is_array($item) && array_key_exists($this->urlKey, $item)) {
-                $url = $item[$this->urlKey];
-            } elseif (is_object($item) && property_exists($item, $this->urlKey)) {
-                $url = $item->{$this->urlKey};
-            } elseif (is_string($item)) {
-                $url = $item;
+            $url = $this->findKey($this->urlKey, $item);
+
+            $request = new HttpPoolRequestItem(
+                id: $id ?? $key,
+                url: $url,
+            );
+
+            if ($request->url === null && is_string($item)) {
+                $request->url = $item;
             }
 
-            $object = new stdClass();
-            $object->id = $id ?? $key;
-            $object->url = $url;
-
-            if (! $object->url) {
-                $object->url = $item;
-            }
-
-            $requests->put($key, $object);
+            $requests->put($key, $request);
         }
 
         return $requests;
+    }
+
+    private function findKey(string $key, mixed $item, mixed $default = null): mixed
+    {
+        if (is_array($item) && array_key_exists($key, $item)) {
+            return $item[$key];
+        }
+
+        if (is_object($item)) {
+            if (property_exists($item, $key)) {
+                $rp = new ReflectionProperty($item, $key);
+                if ($rp->isPublic()) {
+                    return $item->{$key};
+                }
+            }
+
+            if (method_exists($item, $key)) {
+                return $item->{$key}();
+            }
+
+            if (method_exists($item, 'get'.ucfirst($key))) {
+                return $item->{'get'.ucfirst($key)}();
+            }
+        }
+
+        if ($default) {
+            return $default;
+        }
+
+        return null;
+    }
+
+    private function error(string $message, string $method, Throwable $throwable = null): void
+    {
+        $message = "{$message}. Method: {$method}";
+        if ($throwable) {
+            $message = "{$message}. Error: {$throwable->getMessage()}. File: {$throwable->getFile()}. Line: {$throwable->getLine()}";
+        }
+
+        $this->isFailed = true;
+        $this->errors[] = $message;
+        error_log($message);
+
+        if ($this->isAllowThrowErrors) {
+            throw new \Exception($message);
+        }
     }
 }

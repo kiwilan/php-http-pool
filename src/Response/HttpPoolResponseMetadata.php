@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiwilan\HttpPool\Http;
+namespace Kiwilan\HttpPool\Response;
 
 use DateTime;
 use GuzzleHttp\Psr7\Response;

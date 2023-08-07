@@ -2,9 +2,9 @@
 
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
-use Kiwilan\HttpPool\Http\HttpPoolResponse;
-use Kiwilan\HttpPool\Http\HttpPoolResponseBody;
 use Kiwilan\HttpPool\HttpPool;
+use Kiwilan\HttpPool\Response\HttpPoolResponse;
+use Kiwilan\HttpPool\Response\HttpPoolResponseBody;
 
 it('can use options', function () {
     $urls = api_urls;

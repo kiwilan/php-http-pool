@@ -13,31 +13,20 @@ class HttpPool
 {
     /**
      * @param  Collection<mixed,HttpPoolRequestItem>  $requests
-     * @param  Collection<mixed,HttpPoolResponse>  $responses
-     * @param  Collection<mixed,HttpPoolResponse>  $rejected
-     * @param  Collection<mixed,HttpPoolResponse>  $fullfilled
      */
     protected function __construct(
         protected iterable $requestsOrigin,
         protected int $requestCount,
         protected HttpPoolOptions $options,
-        //
         protected Collection $requests,
-        protected Collection $responses,
-        protected Collection $rejected,
-        protected Collection $fullfilled,
-        //
-        protected int $fullfilledCount = 0,
-        protected int $rejectedCount = 0,
         //
         public string $identifierKey = 'id',
         public string $urlKey = 'url',
         public bool $urlAsIdentifier = false,
-        public bool $isExecuted = false,
-        public bool $isRaw = false,
-        public bool $isFailed = true,
+        //
+        public bool $isFailed = false,
         public ?array $errors = null,
-        protected ?float $executionTime = null,
+        //
         protected bool $isAllowMemoryPeak = false,
         protected string $maximumMemory = '10G',
         protected bool $isAllowThrowErrors = true,
@@ -55,9 +44,6 @@ class HttpPool
             requestsOrigin: $requests,
             requestCount: count($requests),
             options: new HttpPoolOptions(),
-            responses: collect([]),
-            rejected: collect([]),
-            fullfilled: collect([]),
             requests: collect([]),
             isAllowThrowErrors: $throwErrors,
         );
@@ -186,52 +172,6 @@ class HttpPool
     }
 
     /**
-     * Get fullfilled responses.
-     *
-     * @return Collection<mixed,HttpPoolResponse>
-     */
-    public function getFullfilled(): Collection
-    {
-        return $this->fullfilled;
-    }
-
-    /**
-     * Get rejected responses.
-     *
-     * @return Collection<mixed,HttpPoolResponse>
-     */
-    public function getRejected(): Collection
-    {
-        return $this->rejected;
-    }
-
-    /**
-     * All responses, including rejected.
-     *
-     * @return Collection<mixed,HttpPoolResponse>
-     */
-    public function getResponses(): Collection
-    {
-        return $this->responses;
-    }
-
-    /**
-     * Count of fullfilled responses.
-     */
-    public function getFullfilledCount(): int
-    {
-        return $this->fullfilledCount;
-    }
-
-    /**
-     * Count of rejected responses.
-     */
-    public function getRejectedCount(): int
-    {
-        return $this->rejectedCount;
-    }
-
-    /**
      * Count of all requests.
      */
     public function getRequestCount(): int
@@ -245,22 +185,6 @@ class HttpPool
     public function getOptions(): HttpPoolOptions
     {
         return $this->options;
-    }
-
-    /**
-     * Check if requests is a raw array.
-     */
-    public function isRaw(): bool
-    {
-        return $this->isRaw;
-    }
-
-    /**
-     * Check if requests are executed.
-     */
-    public function isExecuted(): bool
-    {
-        return $this->isExecuted;
     }
 
     /**
@@ -280,17 +204,9 @@ class HttpPool
     }
 
     /**
-     * Get execution time.
-     */
-    public function getExecutionTime(): ?float
-    {
-        return $this->executionTime;
-    }
-
-    /**
      * Execute requests with Pool.
      */
-    public function execute(): self
+    public function execute(): HttpPoolExecuted
     {
         foreach ($this->requests as $request) {
             if ($request->url === null) {
@@ -299,36 +215,44 @@ class HttpPool
         }
 
         if ($this->requests->isEmpty()) {
-            $this->isExecuted = true;
             $this->error("No requests to execute, input array can be empty or doesn't have `{$this->urlKey}` key", 'execute()');
 
             return $this;
         }
+
+        $responses = collect([]);
+        $fullfilled = collect([]);
+        $rejected = collect([]);
+        $executionTime = null;
 
         try {
             if ($this->isAllowMemoryPeak) {
                 ini_set('memory_limit', "{$this->maximumMemory}");
             }
 
-            $pool = HttpPoolRequest::make($this->requests, $this->options);
+            $request = HttpPoolRequest::make($this->requests, $this->options);
+            $executionTime = $request->getExecutionTime();
 
-            $this->responses = $this->toHttpPoolResponse($pool->getAll());
+            // TODO fix memory peak here
+            $responses = $this->toHttpPoolResponse($request->getAll());
 
-            $this->fullfilled = $this->responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess());
-            $this->fullfilledCount = $this->fullfilled->count();
-            $this->rejected = $this->responses->filter(fn (HttpPoolResponse $response) => ! $response->isSuccess());
-            $this->rejectedCount = $this->rejected->count();
-            $this->isExecuted = true;
-            $this->executionTime = $pool->getExecutionTime();
+            $fullfilled = $responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess());
+            $rejected = $responses->filter(fn (HttpPoolResponse $response) => ! $response->isSuccess());
 
-            if ($this->rejectedCount === 0) {
+            if ($this->isAllowMemoryPeak) {
                 ini_restore('memory_limit');
             }
         } catch (\Throwable $th) {
             $this->error('Pool execution failed', 'execute()', $th);
         }
 
-        return $this;
+        return HttpPoolExecuted::make(
+            pool: $this,
+            responses: $responses,
+            fullfilled: $fullfilled,
+            rejected: $rejected,
+            executionTime: $executionTime,
+        );
     }
 
     /**
@@ -365,7 +289,6 @@ class HttpPool
 
         /** @var Collection<mixed,HttpPoolRequestItem> */
         $requests = collect([]);
-        $this->isRaw = true;
 
         foreach ($iterable as $key => $item) {
             $id = $this->findKey($this->identifierKey, $item, $key);

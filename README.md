@@ -105,13 +105,13 @@ $urls = [
   ],
 ];
 
-$pool = HttpPool::make($urls)
+$execute = HttpPool::make($urls)
   ->setIdentifierKey('uuid') // Default is 'id'
   ->setUrlKey('api') // Default is 'url'
   ->execute()
 ;
 
-$first = $pool->getResponses()->first(); // HttpPoolResponse
+$first = $execute->getResponses()->first(); // HttpPoolResponse
 $first->getId(); // 100, 125
 ```
 
@@ -152,13 +152,57 @@ $urls = [
   ),
 ];
 
-$pool = HttpPool::make($urls)
+$execute = HttpPool::make($urls)
   ->setIdentifierKey('uuid') // Default is 'id'
   ->execute()
 ;
 
-$first = $pool->getResponses()->first(); // HttpPoolResponse
+$first = $execute->getResponses()->first(); // HttpPoolResponse
 $first->getId(); // 100, 125
+```
+
+### Execution
+
+To execute pool, you can use `execute()` method.
+
+```php
+$pool = HttpPool::make($urls);
+$execute = $pool->execute();
+```
+
+`execute()` method returns a `HttpPoolExecuted` object. You can get pool with `getPool()` method.
+
+```php
+$pool = HttpPool::make($urls);
+$execute = $pool->execute();
+
+$pool = $execute->getPool();
+```
+
+In `HttpPoolExecuted` object, you can get responses and more features. All methods `getResponses()`,`getFullfilled()`, `getRejected()` are `Illuminate\Support\Collection` of `HttpPoolResponse`.
+
+```php
+$pool = HttpPool::make($urls);
+$execute = $pool->execute();
+
+// Get all responses (fullfilled and rejected)
+$responses = $execute->getResponses();
+// Get only fullfilled responses
+$fullfilled = $execute->getFullfilled();
+// Get only rejected responses
+$rejected = $execute->getRejected();
+// Get responses count
+$responsesCount = $execute->getResponsesCount();
+// Get fullfilled responses count
+$fullfilledCount = $execute->getFullfilledCount();
+// Get rejected responses count
+$rejectedCount = $execute->getRejectedCount();
+// Get execution time
+$executionTime = $execute->getExecutionTime();
+// Get if pool is failed
+$isFailed = $execute->isFailed();
+// Get errors
+$errors = $execute->getErrors();
 ```
 
 ### Errors
@@ -177,6 +221,14 @@ $isFailed = $pool->isFailed();
 $errors = $pool->getErrors();
 ```
 
+Also available after pool execution.
+
+```php
+$execute = $pool->execute();
+$isFailed = $execute->isFailed();
+$errors = $execute->getErrors();
+```
+
 ### Response
 
 After pool execution, you can get responses with `getResponses()` method. It returns a `Collection` of `HttpPoolResponse`.
@@ -185,7 +237,7 @@ After pool execution, you can get responses with `getResponses()` method. It ret
 > The first item of `getResponses` could not be the first request you sent. It depends of the response time of each request. But you can retrieve the original request with `getMetadata()->getRequest()` method, the best way to find parent is to define an ID, that you could retrieve it with `getId()` method.
 
 ```php
-$responses = $pool->getResponses();
+$responses = $execute->getResponses();
 $first = $responses->first(); // HttpPoolResponse
 
 $first->getId(); // Get original ID
@@ -198,7 +250,7 @@ $first->isBodyAvailable(); // Get if response body exists
 
 ### Metadata
 
-`HttpPoolResponse` has a `HttpPoolResponseMetadata` attribute, it contains some useful data.
+`HttpPoolResponse` has a `HttpPoolResponseMetadata` attribute, it contains some useful data. Here `$first` is a `HttpPoolResponse`.
 
 ```php
 $metadata = $first->getMetadata();
@@ -219,7 +271,7 @@ $header = $metadata->getHeader('Content-Type'); // Original header
 
 ### Body
 
-`HttpPoolResponseBody` is a wrapper of `GuzzleHttp\Psr7\Stream` with some useful methods.
+`HttpPoolResponseBody` is a wrapper of `GuzzleHttp\Psr7\Stream` with some useful methods. Here `$first` is a `HttpPoolResponse`.
 
 ```php
 $body = $first->getBody();

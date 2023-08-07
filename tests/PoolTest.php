@@ -57,21 +57,19 @@ it('can use associative array', function () {
         ->setIdentifierKey('name')
         ->setUrlKey('wikipedia')
         ->allowPrintConsole();
-    $pool = $pool->execute();
+    $responses = $pool->execute();
 
-    expect($pool->getFullfilledCount())->toBe(5);
-    expect($pool->getRejectedCount())->toBe(0);
+    expect($responses->getFullfilledCount())->toBe(5);
+    expect($responses->getRejectedCount())->toBe(0);
     expect($pool->getRequestCount())->toBe(5);
 
-    expect($pool->getFullfilled())->toBeInstanceOf(Collection::class);
-    expect($pool->getFullfilled()->isNotEmpty())->toBeTrue();
-    expect($pool->getRejected()->isNotEmpty())->toBeFalse();
-    expect($pool->getResponses()->isNotEmpty())->toBeTrue();
-    expect($pool->isRaw())->toBeTrue();
-    expect($pool->isExecuted())->toBeTrue();
-    expect($pool->getExecutionTime())->toBeFloat();
+    expect($responses->getFullfilled())->toBeInstanceOf(Collection::class);
+    expect($responses->getFullfilled()->isNotEmpty())->toBeTrue();
+    expect($responses->getRejected()->isNotEmpty())->toBeFalse();
+    expect($responses->getResponses()->isNotEmpty())->toBeTrue();
+    expect($responses->getExecutionTime())->toBeFloat();
 
-    $item = $pool->getResponses()->first();
+    $item = $responses->getResponses()->first();
     expect($item instanceof HttpPoolResponse)->toBeTrue();
     expect($item->isSuccess())->toBeTrue();
     expect($item->getMetadata()->isSuccess())->toBeTrue();

@@ -205,20 +205,28 @@ $execute = $pool->execute();
 
 // Get all responses (fullfilled and rejected)
 $responses = $execute->getResponses();
+
 // Get only fullfilled responses
 $fullfilled = $execute->getFullfilled();
+
 // Get only rejected responses
 $rejected = $execute->getRejected();
+
 // Get responses count
 $responsesCount = $execute->getResponsesCount();
+
 // Get fullfilled responses count
 $fullfilledCount = $execute->getFullfilledCount();
+
 // Get rejected responses count
 $rejectedCount = $execute->getRejectedCount();
+
 // Get execution time
 $executionTime = $execute->getExecutionTime();
+
 // Get if pool is failed
 $isFailed = $execute->isFailed();
+
 // Get errors
 $errors = $execute->getErrors();
 ```

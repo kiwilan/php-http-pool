@@ -92,6 +92,9 @@ $executionTime = $pool->getExecutionTime();
 
 #### Associative array
 
+> [!WARNING]\
+> Identifier and URL have to not be nested.
+
 ```php
 $urls = [
   [
@@ -226,12 +229,11 @@ You can use some advanced options to customize your pool.
 ```php
 $pool = HttpPool::make($urls)
   ->setUrlAsIdentifier() // Use URL as identifier to replace ID
-  ->disallowPrintConsole() // Disable console output
+  ->allowPrintConsole() // Disable console output
 ;
 
 $pool = HttpPool::make($urls)
-  ->allowMemoryPeak() // Allow memory peak if you have a lot of requests
-  ->setMaximumMemory('10G') // Define memory peak, `allowMemoryPeak` must be set to `true`
+  ->allowMemoryPeak('10G') // Allow memory peak if you have a lot of requests
 ;
 ```
 

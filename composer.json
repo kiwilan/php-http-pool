@@ -1,7 +1,7 @@
 {
     "name": "kiwilan/php-http-pool",
     "description": "PHP package with easy-to-use GuzzleHttp pool wrapper to make concurrent requests.",
-    "version": "0.1.0",
+    "version": "0.1.01",
     "keywords": [
         "kiwilan",
         "php",

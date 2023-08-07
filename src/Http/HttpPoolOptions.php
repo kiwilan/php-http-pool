@@ -13,7 +13,7 @@ class HttpPoolOptions
         public int $maxRedirects = 10,
         public int $timeout = 30,
         public int $concurrencyMaximum = 5,
-        public bool $allowPrintConsole = true,
+        public bool $allowPrintConsole = false,
     ) {
     }
 }

@@ -6,8 +6,7 @@ use Kiwilan\HttpPool\HttpPool;
 it('can handle urls', function () {
     $urls = urls;
 
-    $pool = HttpPool::make($urls)
-        ->disallowPrintConsole();
+    $pool = HttpPool::make($urls);
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(5);
@@ -23,8 +22,7 @@ it('can handle urls', function () {
 it('can handle api urls', function () {
     $urls = api_urls;
 
-    $pool = HttpPool::make($urls)
-        ->disallowPrintConsole();
+    $pool = HttpPool::make($urls);
     $requests = $pool->getRequests();
     $item = $requests->first();
 
@@ -40,8 +38,7 @@ it('can handle api urls', function () {
 it('can handle api urls with keys', function () {
     $urls = api_urls_with_keys;
 
-    $pool = HttpPool::make($urls)
-        ->disallowPrintConsole();
+    $pool = HttpPool::make($urls);
     $requests = $pool->getRequests();
     $item = $requests->first();
 
@@ -55,8 +52,7 @@ it('can handle api urls with keys', function () {
 it('can handle fake urls', function () {
     $urls = fake_urls;
 
-    $pool = HttpPool::make($urls)
-        ->disallowPrintConsole();
+    $pool = HttpPool::make($urls);
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(0);
@@ -73,8 +69,7 @@ it('can use objects', function () {
 
     $pool = HttpPool::make($urls)
         ->setIdentifierKey('uuid')
-        ->setUrlKey('api')
-        ->disallowPrintConsole();
+        ->setUrlKey('api');
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(5);
@@ -91,8 +86,7 @@ it('can use collection', function () {
 
     $pool = HttpPool::make($urls)
         ->setIdentifierKey('uuid')
-        ->setUrlKey('api')
-        ->disallowPrintConsole();
+        ->setUrlKey('api');
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(5);
@@ -107,8 +101,7 @@ it('can use collection', function () {
 it('can use collection models', function () {
     $urls = collectionModelsUrls();
 
-    $pool = HttpPool::make($urls)
-        ->disallowPrintConsole();
+    $pool = HttpPool::make($urls);
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(5);
@@ -123,8 +116,7 @@ it('can use collection models', function () {
 it('can use xml body', function () {
     $urls = podcasts;
 
-    $pool = HttpPool::make($urls)
-        ->disallowPrintConsole();
+    $pool = HttpPool::make($urls);
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(5);
@@ -141,8 +133,7 @@ it('can use xml body', function () {
 it('can handle failed', function () {
     $urls = collectionFailed();
 
-    $pool = HttpPool::make($urls)
-        ->disallowPrintConsole();
+    $pool = HttpPool::make($urls);
     $pool = $pool->execute();
 
     expect($pool->getRequestCount())->toBe(5);
@@ -156,8 +147,7 @@ it('can use collection classes', function () {
 
     $pool = HttpPool::make($urls)
         ->setIdentifierKey('uuid')
-        ->setUrlKey('endpoint')
-        ->disallowPrintConsole();
+        ->setUrlKey('endpoint');
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(5);

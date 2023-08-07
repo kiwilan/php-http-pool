@@ -15,7 +15,8 @@ it('can use heavy input', function () {
     $pool = HttpPool::make($pool)
         ->setIdentifierKey('name')
         ->setUrlKey('wikipedia')
-        ->setPoolLimit(100);
+        ->setPoolLimit(100)
+        ->allowPrintConsole();
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(244);
@@ -35,7 +36,8 @@ it('can use very heavy input', function () {
     $pool = HttpPool::make($pool)
         ->setUrlKey('wikipedia')
         ->allowMemoryPeak()
-        ->setPoolLimit(500);
+        ->setPoolLimit(500)
+        ->allowPrintConsole();
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(1639);

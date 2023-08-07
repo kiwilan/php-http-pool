@@ -150,9 +150,9 @@ class HttpPool
     /**
      * Disallow print console, default is `true`.
      */
-    public function disallowPrintConsole(): self
+    public function allowPrintConsole(): self
     {
-        $this->options->allowPrintConsole = false;
+        $this->options->allowPrintConsole = true;
 
         return $this;
     }
@@ -162,25 +162,11 @@ class HttpPool
      * Allow memory peak, default is `false`.
      *
      * If you set very high concurrency or requests with big responses, you can set this option.
-     * Default maximum memory is `10G`, you can set it with `setMaximumMemory` method.
+     * Default maximum memory is `10G`.
      */
-    public function allowMemoryPeak(): self
+    public function allowMemoryPeak(string $maximum = '10G'): self
     {
         $this->isAllowMemoryPeak = true;
-
-        return $this;
-    }
-
-    /**
-     * WARNING: This option can be dangerous.
-     * You have to set `allowMemoryPeak` option to `true` before using this option.
-     *
-     * Set maximum memory, default is `10G`.
-     *
-     * If you set very high concurrency or requests with big responses, you can set this option.
-     */
-    public function setMaximumMemory(string $maximum = '10G'): self
-    {
         $this->maximumMemory = $maximum;
 
         return $this;

@@ -9,7 +9,8 @@ use Kiwilan\HttpPool\HttpPool;
 it('can use options', function () {
     $urls = api_urls;
 
-    $pool = HttpPool::make($urls);
+    $pool = HttpPool::make($urls)
+        ->allowPrintConsole();
     $item = $pool->getRequests()->first();
     $options = $pool->getOptions();
 
@@ -54,7 +55,8 @@ it('can use associative array', function () {
 
     $pool = HttpPool::make($pool)
         ->setIdentifierKey('name')
-        ->setUrlKey('wikipedia');
+        ->setUrlKey('wikipedia')
+        ->allowPrintConsole();
     $pool = $pool->execute();
 
     expect($pool->getFullfilledCount())->toBe(5);

@@ -2,6 +2,7 @@
 
 namespace Kiwilan\HttpPool;
 
+use Closure;
 use Illuminate\Support\Collection;
 use Kiwilan\HttpPool\Request\HttpPoolRequest;
 use Kiwilan\HttpPool\Request\HttpPoolRequestItem;
@@ -20,15 +21,13 @@ class HttpPool
         protected HttpPoolOptions $options,
         protected Collection $requests,
         //
-        public string $identifierKey = 'id',
-        public string $urlKey = 'url',
-        public bool $urlAsIdentifier = false,
+        protected string $identifierKey = 'id',
+        protected string $urlKey = 'url',
+        protected bool $urlAsIdentifier = false,
         //
-        public bool $isFailed = false,
-        public ?array $errors = null,
+        protected bool $isFailed = false,
+        protected ?array $errors = null,
         //
-        protected bool $isAllowMemoryPeak = false,
-        protected string $maximumMemory = '2G',
         protected bool $isAllowThrowErrors = true,
     ) {
     }
@@ -54,12 +53,28 @@ class HttpPool
     }
 
     /**
-     * Use this method if you allow memory peak with `allowMemoryPeak()`.
+     * Create HttpPool instance with memory peak handler. Disallow throw errors.
      *
-     * Reset memory limit.
+     * WARNING: This option can be dangerous. Use it carefully.
+     *
+     * Default maximum memory is `2G`.
+     *
+     * @param  iterable
+     * @param  Closure(\Kiwilan\HttpPool\HttpPool $pool): void  $closure
      */
-    public static function resetMemory(): void
+    public static function handleMemoryPeak(iterable $requests, Closure $closure, string $memoryPeak = '2G'): void
     {
+        ini_set('memory_limit', "{$memoryPeak}");
+
+        $pool = HttpPool::make($requests, false);
+        $closure($pool);
+
+        unset($pool);
+        unset($closure);
+        gc_collect_cycles();
+        if (function_exists('memory_reset_peak_usage')) {
+            memory_reset_peak_usage();
+        }
         ini_restore('memory_limit');
     }
 
@@ -157,22 +172,6 @@ class HttpPool
     }
 
     /**
-     * WARNING: This option can be dangerous.
-     * Allow memory peak, default is `false`.
-     *
-     * After execution, you have to use `HttpPool::resetMemory()` to reset memory limit.
-     * If you set very high concurrency or requests with big responses, you can set this option.
-     * Default maximum memory is `2G`.
-     */
-    public function allowMemoryPeak(string $maximum = '2G'): self
-    {
-        $this->isAllowMemoryPeak = true;
-        $this->maximumMemory = $maximum;
-
-        return $this;
-    }
-
-    /**
      * Get requests.
      *
      * @return Collection<mixed,HttpPoolRequestItem>
@@ -237,14 +236,9 @@ class HttpPool
         $executionTime = null;
 
         try {
-            if ($this->isAllowMemoryPeak) {
-                ini_set('memory_limit', "{$this->maximumMemory}");
-            }
-
             $request = HttpPoolRequest::make($this->requests, $this->options);
             $executionTime = $request->getExecutionTime();
 
-            // TODO fix memory peak here
             $responses = $this->toHttpPoolResponse($request->getAll());
 
             $fullfilled = $responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess());

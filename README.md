@@ -22,7 +22,7 @@ PHP package with easy-to-use [`GuzzleHttp`](https://docs.guzzlephp.org/en/stable
 -   🗂️ Keep identifier of each request: easy to put response into original item (in case of `Collection` of `Model` with Laravel, for example)
 -   📦 `HttpPoolResponse` wrapper with some features to improve DX: original ID, body, metadata...
 -   🏡 Keep original `GuzzleHttp` response in `HttpPoolResponse`: you're in home
--   🚨 Allow define memory peak: if you have a lot of requests
+-   🚨 Allow handle memory peak: if you have a lot of requests
 -   🗃️ Works with simple arrays, with associative arrays, with array of objects, with Laravel [`Collection`](https://laravel.com/docs/10.x/collections): just define where to get identifier and URL
 -   💬 Optional console output: you can disable it if you don't want to see progress
 
@@ -332,14 +332,20 @@ HttpPool::make($urls)->allowPrintConsole();
 
 #### Memory peak
 
-Handle memory peak is optional, but if you have a lot of requests, you can define a memory peak to avoid memory peak. Just call `HttpPool::resetMemory()` after pool execution and treatment of responses.
+Handle memory peak is optional, but if you have a lot of requests, you can use `HttpPool::handleMemoryPeak` to avoid memory peak. `HttpPool::class` instance will be automatically passed to callback, you can set options and execute pool inside callback. It's better to set all your treatment inside callback, even after `execute()` method.
+
+Memory peak is set to `2G` by default, you can change it with second param.
+
+After callback, memory will be reset and garbage collector will be called.
 
 ```php
-$pool = HttpPool::make($urls)->allowMemoryPeak('2G');
-$execute = $pool->execute();
+HttpPool::handleMemoryPeak($urls, function (HttpPool $pool) {
+  // Set options to pool
 
-// After pool execution and treatment of responses
-HttpPool::resetMemory();
+  $executed = $pool->execute();
+
+  // Treatment of responses
+}, '2G');
 ```
 
 ## Testing

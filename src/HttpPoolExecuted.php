@@ -23,8 +23,8 @@ class HttpPoolExecuted
         protected int $rejectedCount = 0,
         //
         protected ?float $executionTime = null,
-        public bool $isFailed = false,
-        public ?array $errors = null,
+        protected bool $isFailed = false,
+        protected ?array $errors = null,
     ) {
     }
 

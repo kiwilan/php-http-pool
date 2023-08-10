@@ -17,9 +17,9 @@ it('can use heavy input', function () {
         ->setUrlKey('wikipedia')
         ->setPoolLimit(100)
         ->allowPrintConsole();
-    $executed = $pool->execute();
+    $fullfilled = $pool->execute();
 
-    expect($executed->getFullfilledCount())->toBe(244);
+    expect($fullfilled->getFullfilledCount())->toBe(244);
 });
 
 it('can use very heavy input', function () {
@@ -37,9 +37,9 @@ it('can use very heavy input', function () {
         ->setUrlKey('wikipedia')
         ->setPoolLimit(500)
         ->allowPrintConsole();
-    $executed = $pool->execute();
+    $fullfilled = $pool->execute();
 
-    expect($executed->getFullfilledCount())->toBe(1639);
+    expect($fullfilled->getFullfilledCount())->toBe(1639);
 });
 
 it('can use memory peak handler', function () {
@@ -53,12 +53,12 @@ it('can use memory peak handler', function () {
         ];
     }
 
-    HttpPool::handleMemoryPeak($pool, function (HttpPool $pool) {
-        $pool->setUrlKey('wikipedia')
-            ->setPoolLimit(500)
-            ->allowPrintConsole();
-        $executed = $pool->execute();
+    $pool = HttpPool::make($pool)
+        ->setUrlKey('wikipedia')
+        ->setPoolLimit(500)
+        ->allowMemoryPeak()
+        ->allowPrintConsole();
+    $fullfilled = $pool->execute();
 
-        expect($executed->getFullfilledCount())->toBe(1639);
-    });
+    expect($fullfilled->getFullfilledCount())->toBe(1639);
 });

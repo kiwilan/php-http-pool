@@ -15,6 +15,7 @@ class HttpPoolResponseBody
         protected bool $isJson = false,
         public bool $isArray = false,
         protected bool $isXml = false,
+        protected bool $isBinary = false,
         protected bool $isString = false,
         protected ?string $contents = null,
     ) {
@@ -34,9 +35,19 @@ class HttpPoolResponseBody
             isExists: ! empty($raw),
         );
 
-        $self->isJson = $self->isValidJson($raw);
-        $self->isArray = $self->isValidArray($raw);
-        $self->isXml = $self->isValidXml($raw);
+        if (! $self->isExists) {
+            return $self;
+        }
+        $self->isBinary = $self->isValidBinary($raw);
+
+        if (! $self->isBinary) {
+            $self->isJson = $self->isValidJson($raw);
+            $self->isArray = $self->isValidArray($raw);
+
+            if (! $self->isJson) {
+                $self->isXml = $self->isValidXml($raw);
+            }
+        }
         $self->contents = ! empty($raw) ? $raw : null;
 
         return $self;
@@ -51,7 +62,7 @@ class HttpPoolResponseBody
     }
 
     /**
-     * Body as `string` form Guzzle.
+     * Body as `string` from Guzzle.
      */
     public function getContents(): ?string
     {
@@ -64,9 +75,7 @@ class HttpPoolResponseBody
     public function getJson(): ?object
     {
         if ($this->isJson) {
-            $contents = json_decode($this->contents);
-
-            return $contents;
+            return json_decode($this->contents);
         }
 
         return null;
@@ -77,7 +86,6 @@ class HttpPoolResponseBody
      */
     public function getXml(): ?SimpleXMLElement
     {
-
         if ($this->isXml) {
             return simplexml_load_string($this->contents);
         }
@@ -102,6 +110,14 @@ class HttpPoolResponseBody
     }
 
     /**
+     * Check if body is `binary`.
+     */
+    public function isBinary(): bool
+    {
+        return $this->isBinary;
+    }
+
+    /**
      * Check if body is `string`.
      */
     public function isString(): bool
@@ -119,7 +135,11 @@ class HttpPoolResponseBody
         }
 
         return json_decode($this->contents, true);
+    }
 
+    private function isValidBinary(mixed $raw): bool
+    {
+        return false === mb_detect_encoding((string) $raw, null, true);
     }
 
     private function isValidJson(mixed $raw): bool
@@ -197,6 +217,7 @@ class HttpPoolResponseBody
 
             if (is_array($value)) {
                 $result = $this->findKeyRecursive($value, $searchKey);
+
                 if ($result !== null) {
                     return $result;
                 }

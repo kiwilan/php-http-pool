@@ -2,7 +2,6 @@
 
 namespace Kiwilan\HttpPool;
 
-use Closure;
 use Illuminate\Support\Collection;
 use Kiwilan\HttpPool\Request\HttpPoolRequest;
 use Kiwilan\HttpPool\Request\HttpPoolRequestItem;
@@ -29,6 +28,8 @@ class HttpPool
         protected ?array $errors = null,
         //
         protected bool $isAllowThrowErrors = true,
+        protected bool $isAllowMemoryPeak = false,
+        protected string $memoryMaximum = '2G',
     ) {
     }
 
@@ -50,32 +51,6 @@ class HttpPool
         $self->requests = $self->transformRequests($requests);
 
         return $self;
-    }
-
-    /**
-     * Create HttpPool instance with memory peak handler. Disallow throw errors.
-     *
-     * WARNING: This option can be dangerous. Use it carefully.
-     *
-     * Default maximum memory is `2G`.
-     *
-     * @param  iterable
-     * @param  Closure(\Kiwilan\HttpPool\HttpPool $pool): void  $closure
-     */
-    public static function handleMemoryPeak(iterable $requests, Closure $closure, string $memoryPeak = '2G'): void
-    {
-        ini_set('memory_limit', "{$memoryPeak}");
-
-        $pool = HttpPool::make($requests, false);
-        $closure($pool);
-
-        unset($pool);
-        unset($closure);
-        gc_collect_cycles();
-        if (function_exists('memory_reset_peak_usage')) {
-            memory_reset_peak_usage();
-        }
-        ini_restore('memory_limit');
     }
 
     /**
@@ -172,6 +147,21 @@ class HttpPool
     }
 
     /**
+     * WARNING: This option can be dangerous. Use it carefully.
+     *
+     * Allow memory peak, default is `false`.
+     *
+     * Default maximum memory is `2G`.
+     */
+    public function allowMemoryPeak(string $memoryMaximum = '2G'): self
+    {
+        $this->isAllowThrowErrors = true;
+        $this->memoryMaximum = $memoryMaximum;
+
+        return $this;
+    }
+
+    /**
      * Get requests.
      *
      * @return Collection<mixed,HttpPoolRequestItem>
@@ -216,8 +206,12 @@ class HttpPool
     /**
      * Execute requests with Pool.
      */
-    public function execute(): HttpPoolExecuted
+    public function execute(): HttpPoolFullfilled
     {
+        if ($this->isAllowMemoryPeak) {
+            ini_set('memory_limit', "{$this->memoryMaximum}");
+        }
+
         foreach ($this->requests as $request) {
             if ($request->url === null) {
                 $this->error("Cannot find url for `{$request->id}`", 'execute()');
@@ -247,7 +241,7 @@ class HttpPool
             $this->error('Pool execution failed', 'execute()', $th);
         }
 
-        return HttpPoolExecuted::make(
+        return HttpPoolFullfilled::make(
             pool: $this,
             responses: $responses,
             fullfilled: $fullfilled,
@@ -347,8 +341,10 @@ class HttpPool
     private function error(string $message, string $method, Throwable $throwable = null): void
     {
         $message = "{$message}. Method: {$method}";
+
         if ($throwable) {
-            $message = "{$message}. Error: {$throwable->getMessage()}. File: {$throwable->getFile()}. Line: {$throwable->getLine()}";
+            $throwableMessage = "{$throwable->getMessage()}, line {$throwable->getLine()} of {$throwable->getFile()}. {$throwable->getTraceAsString()}";
+            $message = "{$message}. Error: {$throwableMessage}";
         }
 
         $this->isFailed = true;

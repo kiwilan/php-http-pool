@@ -5,7 +5,7 @@ namespace Kiwilan\HttpPool;
 use Illuminate\Support\Collection;
 use Kiwilan\HttpPool\Response\HttpPoolResponse;
 
-class HttpPoolExecuted
+class HttpPoolFullfilled
 {
     /**
      * @param  Collection<mixed,HttpPoolResponse>  $responses

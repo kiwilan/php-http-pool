@@ -184,7 +184,7 @@ $pool = HttpPool::make($urls);
 $execute = $pool->execute();
 ```
 
-`execute()` method returns a `HttpPoolExecuted` object. You can get pool with `getPool()` method.
+`execute()` method returns a `HttpPoolFullfilled` object. You can get pool with `getPool()` method.
 
 ```php
 use Kiwilan\HttpPool\HttpPool;
@@ -195,7 +195,7 @@ $execute = $pool->execute();
 $pool = $execute->getPool();
 ```
 
-In `HttpPoolExecuted` object, you can get responses and more features. All methods `getResponses()`,`getFullfilled()`, `getRejected()` are `Illuminate\Support\Collection` of `HttpPoolResponse`.
+In `HttpPoolFullfilled` object, you can get responses and more features. All methods `getResponses()`,`getFullfilled()`, `getRejected()` are `Illuminate\Support\Collection` of `HttpPoolResponse`.
 
 ```php
 use Kiwilan\HttpPool\HttpPool;
@@ -308,6 +308,7 @@ $isExists = $body->isExists(); // Get if body exists
 $contents = $body->getContents(); // Get body contents
 $json = $body->getJson(); // Get body as JSON
 $xml = $body->getXml(); // Get body as XML
+$isBinary = $body->isBinary(); // Get if body is binary
 $isJson = $body->isJson(); // Get if body is a valid JSON
 $isXml = $body->isXml(); // Get if body is a valid XML
 $isString = $body->isString(); // Get if body is a string
@@ -321,31 +322,26 @@ You can use some advanced options to customize your pool.
 Use URL as identifier to replace ID.
 
 ```php
-HttpPool::make($urls)->setUrlAsIdentifier();
+HttpPool::make($urls)
+  ->setUrlAsIdentifier();
 ```
 
 Enable console output.
 
 ```php
-HttpPool::make($urls)->allowPrintConsole();
+HttpPool::make($urls)
+  ->allowPrintConsole();
 ```
 
 #### Memory peak
 
-Handle memory peak is optional, but if you have a lot of requests, you can use `HttpPool::handleMemoryPeak` to avoid memory peak. `HttpPool::class` instance will be automatically passed to callback, you can set options and execute pool inside callback. It's better to set all your treatment inside callback, even after `execute()` method.
+Handle memory peak is optional, but if you have a lot of requests, you can use `allowMemoryPeak` to avoid memory peak. New memory peak will be set inside `execute()` method.
 
 Memory peak is set to `2G` by default, you can change it with second param.
 
-After callback, memory will be reset and garbage collector will be called.
-
 ```php
-HttpPool::handleMemoryPeak($urls, function (HttpPool $pool) {
-  // Set options to pool
-
-  $executed = $pool->execute();
-
-  // Treatment of responses
-}, '2G');
+HttpPool::make($urls)
+  ->allowMemoryPeak('2G');
 ```
 
 ## Testing

@@ -2,6 +2,12 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## 0.2.21 - 2023-08-10
+
+- `HttpPool` remove `handleMemoryPeak` to replace with `allowMemoryPeak`, more flexible
+- `HttpPoolExecuted` is now `HttpPoolFullfilled`
+- add `isBinary` to `HttpPoolResponseBody` to check if the response body is binary, other checks will be triggered if it is not binary
+
 ## 0.2.2 - 2023-08-10
 
 - `HttpPool` remove `handleMemoryPeak` to replace with `allowMemoryPeak`, more flexible

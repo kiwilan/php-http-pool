@@ -155,7 +155,7 @@ class HttpPool
      */
     public function allowMemoryPeak(string $memoryMaximum = '2G'): self
     {
-        $this->isAllowThrowErrors = true;
+        $this->isAllowMemoryPeak = true;
         $this->memoryMaximum = $memoryMaximum;
 
         return $this;
@@ -287,6 +287,7 @@ class HttpPool
 
         foreach ($iterable as $key => $item) {
             $id = $this->findKey($this->identifierKey, $item, $key);
+
             if ($this->urlAsIdentifier) {
                 $id = $item;
             }
@@ -317,6 +318,7 @@ class HttpPool
         if (is_object($item)) {
             if (property_exists($item, $key)) {
                 $rp = new ReflectionProperty($item, $key);
+
                 if ($rp->isPublic()) {
                     return $item->{$key};
                 }

@@ -262,7 +262,6 @@ function collectionFailed(): Collection
         $obj = new stdClass();
         $obj->id = $object['uuid'];
         $obj->name = $object['name'];
-        $obj->api = $object['api'];
 
         $temp->put($obj->id, $obj);
     }

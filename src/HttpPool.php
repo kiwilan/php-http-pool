@@ -232,6 +232,11 @@ class HttpPool
             $request = HttpPoolRequest::make($this->requests, $this->options);
             $executionTime = $request->getExecutionTime();
 
+            if ($request->getFullfilledCount() === 0) {
+                $this->isFailed = true;
+                $this->errors[] = 'All requests are failed';
+            }
+
             $responses = $this->toHttpPoolResponse($request->getAll());
 
             $fullfilled = $responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess());

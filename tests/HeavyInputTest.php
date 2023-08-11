@@ -73,3 +73,21 @@ it('can use array with empty url', function () {
 
     expect($fullfilled->getFullfilledCount())->toBe(239);
 });
+
+it('can use array with no url', function () {
+    $authors = getJson(authors_list);
+    $temp = [];
+    foreach ($authors as $author) {
+        $class = new stdClass();
+        $class->name = $author['title'];
+        $class->url = null;
+        $temp[] = $class;
+    }
+
+    $fullfilled = HttpPool::make($temp)
+        ->allowMemoryPeak()
+        ->allowPrintConsole()
+        ->execute();
+
+    expect($fullfilled->getFullfilledCount())->toBe(0);
+});

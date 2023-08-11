@@ -151,9 +151,11 @@ class HttpPoolRequest
 
         if ($urls_count > 0) {
             $firstItem = $urls->first();
-            $domain = parse_url($firstItem->url, PHP_URL_HOST);
             $console->newLine();
-            $console->print("  HttpPool {$domain} with async requests...", 'bright-blue');
+            if ($firstItem->url) {
+                $domain = parse_url($firstItem->url, PHP_URL_HOST);
+                $console->print("  HttpPool {$domain} with async requests...", 'bright-blue');
+            }
             $console->print("  Pool is limited to {$this->options->poolLimit} from options, {$urls_count} requests will be converted into {$chunks_size} chunks.");
         }
 

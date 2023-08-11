@@ -217,10 +217,6 @@ class HttpPool
             $urls[] = $request->url;
         }
 
-        if (empty(array_filter($urls, fn ($a) => $a !== null))) {
-            $this->error('All requests are null', 'execute()');
-        }
-
         if ($this->requests->isEmpty()) {
             $this->error("No requests to execute, input array can be empty or doesn't have `{$this->urlKey}` key", 'execute()');
 

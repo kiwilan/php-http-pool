@@ -2,6 +2,11 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## 0.2.30 - 2023-08-11
+
+- Allow some URL to be null in pool, a warning message will appear if console can print. An error will be added to `errors` list.
+- If all URL are null, an Exception will be raised.
+
 ## 0.2.22 - 2023-08-10
 
 - fix `HttpPool` `isAllowMemoryPeak` property

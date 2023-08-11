@@ -62,3 +62,14 @@ it('can use memory peak handler', function () {
 
     expect($fullfilled->getFullfilledCount())->toBe(1639);
 });
+
+it('can use array with empty url', function () {
+    $authors = getJson(authors_list);
+
+    $fullfilled = HttpPool::make($authors)
+        ->allowMemoryPeak()
+        ->allowPrintConsole()
+        ->execute();
+
+    expect($fullfilled->getFullfilledCount())->toBe(239);
+});

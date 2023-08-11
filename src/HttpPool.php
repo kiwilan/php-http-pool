@@ -212,10 +212,13 @@ class HttpPool
             ini_set('memory_limit', "{$this->memoryMaximum}");
         }
 
+        $urls = [];
         foreach ($this->requests as $request) {
-            if ($request->url === null) {
-                $this->error("Cannot find url for `{$request->id}`", 'execute()');
-            }
+            $urls[] = $request->url;
+        }
+
+        if (empty(array_filter($urls, fn ($a) => $a !== null))) {
+            $this->error('All requests are null', 'execute()');
         }
 
         if ($this->requests->isEmpty()) {
@@ -237,6 +240,10 @@ class HttpPool
 
             $fullfilled = $responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess());
             $rejected = $responses->filter(fn (HttpPoolResponse $response) => ! $response->isSuccess());
+
+            if ($request->getDiff()) {
+                $this->errors[] = "Some requests are not executed because URL is not valid: {$request->getDiff()}";
+            }
         } catch (\Throwable $th) {
             $this->error('Pool execution failed', 'execute()', $th);
         }

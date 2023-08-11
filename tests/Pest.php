@@ -3,6 +3,7 @@
 use Illuminate\Support\Collection;
 
 define('authors', __DIR__.'/data/authors.json');
+define('authors_list', __DIR__.'/data/authors-list.json');
 define('authors_short', __DIR__.'/data/authors-short.json');
 define('books_title', __DIR__.'/data/books-title.json');
 define('books', __DIR__.'/data/books.json');

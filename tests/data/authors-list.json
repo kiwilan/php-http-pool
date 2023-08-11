@@ -1,0 +1,978 @@
+[
+    {
+        "title": "Bablet Mathieu",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abablet-mathieu&format=json"
+    },
+    {
+        "title": "Maroh Jul",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amaroh-jul&format=json"
+    },
+    {
+        "title": "Moore Alan",
+        "url": null
+    },
+    {
+        "title": "Gibbons Dave",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agibbons-dave&format=json"
+    },
+    {
+        "title": "Ennis Garth",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aennis-garth&format=json"
+    },
+    {
+        "title": "Robertson Darick",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Arobertson-darick&format=json"
+    },
+    {
+        "title": "Braun Russ",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abraun-russ&format=json"
+    },
+    {
+        "title": "McCrea John",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amc-crea-john&format=json"
+    },
+    {
+        "title": "Burns Keith",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aburns-keith&format=json"
+    },
+    {
+        "title": "Aviña Tony",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aavina-tony&format=json"
+    },
+    {
+        "title": "Benedetti Alessandro",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abenedetti-alessandro&format=json"
+    },
+    {
+        "title": "Braun Russell",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abraun-russell&format=json"
+    },
+    {
+        "title": "Clark Richard P.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aclark-richard-p&format=json"
+    },
+    {
+        "title": "Poinsot Marion",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apoinsot-marion&format=json"
+    },
+    {
+        "title": "Lylian",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alylian&format=json"
+    },
+    {
+        "title": "Bottero Pierre",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abottero-pierre&format=json"
+    },
+    {
+        "title": "Martin Montse",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amartin-montse&format=json"
+    },
+    {
+        "title": "Chevallier Loïc",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Achevallier-loic&format=json"
+    },
+    {
+        "title": "Vial Nicolas",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avial-nicolas&format=json"
+    },
+    {
+        "title": "Sattouf Riad",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asattouf-riad&format=json"
+    },
+    {
+        "title": "Hobb Robin",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahobb-robin&format=json"
+    },
+    {
+        "title": "Gaudin Jean-Charles",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agaudin-jean-charles&format=json"
+    },
+    {
+        "title": "Sieurac Laurent",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asieurac-laurent&format=json"
+    },
+    {
+        "title": "Picaud Christophe",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apicaud-christophe&format=json"
+    },
+    {
+        "title": "Clerjeaud Jean-Luc",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aclerjeaud-jean-luc&format=json"
+    },
+    {
+        "title": "Jodorowsky Alejandro",
+        "url": null
+    },
+    {
+        "title": "Moebius",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amoebius&format=json"
+    },
+    {
+        "title": "Giménez Juan",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agimenez-juan&format=json"
+    },
+    {
+        "title": "Bonifay Philippe",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abonifay-philippe&format=json"
+    },
+    {
+        "title": "Baldetti Laurence",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abaldetti-laurence&format=json"
+    },
+    {
+        "title": "Bilal Enki",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abilal-enki&format=json"
+    },
+    {
+        "title": "Tarquin Didier",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Atarquin-didier&format=json"
+    },
+    {
+        "title": "Arleston Christophe",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aarleston-christophe&format=json"
+    },
+    {
+        "title": "Lang John",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alang-john&format=json"
+    },
+    {
+        "title": "Guillois Franck",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aguillois-franck&format=json"
+    },
+    {
+        "title": "Hergé",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aherge&format=json"
+    },
+    {
+        "title": "Matteo Daniela Di",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amatteo-daniela-di&format=json"
+    },
+    {
+        "title": "Alwett Audrey",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aalwett-audrey&format=json"
+    },
+    {
+        "title": "Vincent Cyril",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avincent-cyril&format=json"
+    },
+    {
+        "title": "Formicola Cecilia",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aformicola-cecilia&format=json"
+    },
+    {
+        "title": "Albin Guillaume",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aalbin-guillaume&format=json"
+    },
+    {
+        "title": "Sabater Sylvie",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asabater-sylvie&format=json"
+    },
+    {
+        "title": "Frissen Jerry",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Afrissen-jerry&format=json"
+    },
+    {
+        "title": "Secher Velentin",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asecher-velentin&format=json"
+    },
+    {
+        "title": "Henrichon Niko",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahenrichon-niko&format=json"
+    },
+    {
+        "title": "Alvarez Jérôme",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aalvarez-jerome&format=json"
+    },
+    {
+        "title": "Leoni Pierre",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aleoni-pierre&format=json"
+    },
+    {
+        "title": "Quesada Joe",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aquesada-joe&format=json"
+    },
+    {
+        "title": "Middleton Joshua",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amiddleton-joshua&format=json"
+    },
+    {
+        "title": "Gieter",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agieter&format=json"
+    },
+    {
+        "title": "JBX",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ajbx&format=json"
+    },
+    {
+        "title": "Dalmasso Fabien",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adalmasso-fabien&format=json"
+    },
+    {
+        "title": "Vigneau Fred",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avigneau-fred&format=json"
+    },
+    {
+        "title": "Lemire Jeff",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alemire-jeff&format=json"
+    },
+    {
+        "title": "Ellis Warren",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aellis-warren&format=json"
+    },
+    {
+        "title": "Kirkman Robert",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Akirkman-robert&format=json"
+    },
+    {
+        "title": "Moore Tony",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amoore-tony&format=json"
+    },
+    {
+        "title": "Derib",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aderib&format=json"
+    },
+    {
+        "title": "Job",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ajob&format=json"
+    },
+    {
+        "title": "Chamblain",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Achamblain&format=json"
+    },
+    {
+        "title": "Giacometti",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agiacometti&format=json"
+    },
+    {
+        "title": "Proust Marcel",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aproust-marcel&format=json"
+    },
+    {
+        "title": "Twain Mark",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Atwain-mark&format=json"
+    },
+    {
+        "title": "Carroll Lewis",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acarroll-lewis&format=json"
+    },
+    {
+        "title": "Dickens Charles",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adickens-charles&format=json"
+    },
+    {
+        "title": "Lovecraft H. P",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alovecraft-h-p&format=json"
+    },
+    {
+        "title": "Shelley Mary",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ashelley-mary&format=json"
+    },
+    {
+        "title": "Wilde Oscar",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Awilde-oscar&format=json"
+    },
+    {
+        "title": "Melville Herman",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amelville-herman&format=json"
+    },
+    {
+        "title": "Swift Jonathan",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aswift-jonathan&format=json"
+    },
+    {
+        "title": "Austen Jane",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aausten-jane&format=json"
+    },
+    {
+        "title": "Verne Jules",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Averne-jules&format=json"
+    },
+    {
+        "title": "Lovecraft Howard Phillips",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alovecraft-howard-phillips&format=json"
+    },
+    {
+        "title": "Zola Émile",
+        "url": null
+    },
+    {
+        "title": "Voltaire",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avoltaire&format=json"
+    },
+    {
+        "title": "Hugo Victor",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahugo-victor&format=json"
+    },
+    {
+        "title": "Kant Immanuel",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Akant-immanuel&format=json"
+    },
+    {
+        "title": "Dumas Alexandre",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adumas-alexandre&format=json"
+    },
+    {
+        "title": "Vian Boris",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avian-boris&format=json"
+    },
+    {
+        "title": "Andersen Hans Christian",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aandersen-hans-christian&format=json"
+    },
+    {
+        "title": "Prévost Antoine François",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aprevost-antoine-francois&format=json"
+    },
+    {
+        "title": "Virgile",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avirgile&format=json"
+    },
+    {
+        "title": "Weil Simone",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aweil-simone&format=json"
+    },
+    {
+        "title": "Darwin Charles",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adarwin-charles&format=json"
+    },
+    {
+        "title": "Hawthorne Nathaniel",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahawthorne-nathaniel&format=json"
+    },
+    {
+        "title": "Kafka Franz",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Akafka-franz&format=json"
+    },
+    {
+        "title": "Apollinaire Guillaume",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aapollinaire-guillaume&format=json"
+    },
+    {
+        "title": "Gubernatis Aurélie Hustin de",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agubernatis-aurelie-hustin-de&format=json"
+    },
+    {
+        "title": "Harari Yuval Noah",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aharari-yuval-noah&format=json"
+    },
+    {
+        "title": "Rowell Rainbow",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Arowell-rainbow&format=json"
+    },
+    {
+        "title": "Dawson Juno",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adawson-juno&format=json"
+    },
+    {
+        "title": "Doyle Arthur Conan",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adoyle-arthur-conan&format=json"
+    },
+    {
+        "title": "Nix Garth",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Anix-garth&format=json"
+    },
+    {
+        "title": "Meyer Stephenie",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ameyer-stephenie&format=json"
+    },
+    {
+        "title": "Huff Tanya",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahuff-tanya&format=json"
+    },
+    {
+        "title": "Banks Iain M.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abanks-iain-m&format=json"
+    },
+    {
+        "title": "Auel Jean M.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aauel-jean-m&format=json"
+    },
+    {
+        "title": "Brook Meljean",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abrook-meljean&format=json"
+    },
+    {
+        "title": "Andrews Ilona",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aandrews-ilona&format=json"
+    },
+    {
+        "title": "Bell Jay",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abell-jay&format=json"
+    },
+    {
+        "title": "Showalter Gena",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ashowalter-gena&format=json"
+    },
+    {
+        "title": "Mass Sarah J.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amass-sarah-j&format=json"
+    },
+    {
+        "title": "Maas Sarah J.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amaas-sarah-j&format=json"
+    },
+    {
+        "title": "Fforde Jasper",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Afforde-jasper&format=json"
+    },
+    {
+        "title": "Vandel Jean-Gaston",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avandel-jean-gaston&format=json"
+    },
+    {
+        "title": "Carsac Francis",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acarsac-francis&format=json"
+    },
+    {
+        "title": "May J. Le",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amay-j-le&format=json"
+    },
+    {
+        "title": "Suragne Pierre",
+        "url": null
+    },
+    {
+        "title": "Dartal Frank",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adartal-frank&format=json"
+    },
+    {
+        "title": "Thompson Jim",
+        "url": null
+    },
+    {
+        "title": "Riou Jean-Michel",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ariou-jean-michel&format=json"
+    },
+    {
+        "title": "Orwell George",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aorwell-george&format=json"
+    },
+    {
+        "title": "Robinson Kim Stanley",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Arobinson-kim-stanley&format=json"
+    },
+    {
+        "title": "Siramy Pierre",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asiramy-pierre&format=json"
+    },
+    {
+        "title": "Léger Laurent",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aleger-laurent&format=json"
+    },
+    {
+        "title": "Kampusch Natascha",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Akampusch-natascha&format=json"
+    },
+    {
+        "title": "Disch Thomas M.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adisch-thomas-m&format=json"
+    },
+    {
+        "title": "Herault P. J.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aherault-p-j&format=json"
+    },
+    {
+        "title": "Camut Jérôme",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acamut-jerome&format=json"
+    },
+    {
+        "title": "Hug Nathalie",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahug-nathalie&format=json"
+    },
+    {
+        "title": "Patterson James",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apatterson-james&format=json"
+    },
+    {
+        "title": "Paetro Maxine",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apaetro-maxine&format=json"
+    },
+    {
+        "title": "Beigbeder Frede",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abeigbeder-frede&format=json"
+    },
+    {
+        "title": "Vautrin Jean",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avautrin-jean&format=json"
+    },
+    {
+        "title": "Grafton Sue",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agrafton-sue&format=json"
+    },
+    {
+        "title": "Vogt Alfred E. Van",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Avogt-alfred-e-van&format=json"
+    },
+    {
+        "title": "Stross Charles",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Astross-charles&format=json"
+    },
+    {
+        "title": "Despentes Virginie",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adespentes-virginie&format=json"
+    },
+    {
+        "title": "Genefort Laurent",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agenefort-laurent&format=json"
+    },
+    {
+        "title": "Bordage Pierre",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abordage-pierre&format=json"
+    },
+    {
+        "title": "Weir Andy",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aweir-andy&format=json"
+    },
+    {
+        "title": "Watts Peter",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Awatts-peter&format=json"
+    },
+    {
+        "title": "Asimov Isaac",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aasimov-isaac&format=json"
+    },
+    {
+        "title": "Damasio Alain",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adamasio-alain&format=json"
+    },
+    {
+        "title": "Lehman Paul Evan",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alehman-paul-evan&format=json"
+    },
+    {
+        "title": "Tolkien J. R. R.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Atolkien-j-r-r&format=json"
+    },
+    {
+        "title": "Gaiman Neil",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agaiman-neil&format=json"
+    },
+    {
+        "title": "Pratchett Terry",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apratchett-terry&format=json"
+    },
+    {
+        "title": "Briggs Stephen",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abriggs-stephen&format=json"
+    },
+    {
+        "title": "Hackso Viciss",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahackso-viciss&format=json"
+    },
+    {
+        "title": "Tchaikovsky Adrian",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Atchaikovsky-adrian&format=json"
+    },
+    {
+        "title": "Bear Greg",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abear-greg&format=json"
+    },
+    {
+        "title": "Tchaikovski Adrian",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Atchaikovski-adrian&format=json"
+    },
+    {
+        "title": "Gemmell David",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agemmell-david&format=json"
+    },
+    {
+        "title": "Lindholm Megan",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alindholm-megan&format=json"
+    },
+    {
+        "title": "Robinson Frank M.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Arobinson-frank-m&format=json"
+    },
+    {
+        "title": "Hamilton Peter F.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahamilton-peter-f&format=json"
+    },
+    {
+        "title": "Westover Tara",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Awestover-tara&format=json"
+    },
+    {
+        "title": "Bourdeaut Olivier",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abourdeaut-olivier&format=json"
+    },
+    {
+        "title": "Reaves Michael",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Areaves-michael&format=json"
+    },
+    {
+        "title": "Brunner John",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abrunner-john&format=json"
+    },
+    {
+        "title": "Audouin-Mamikonian Sophie",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aaudouin-mamikonian-sophie&format=json"
+    },
+    {
+        "title": "Simmons Dan",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asimmons-dan&format=json"
+    },
+    {
+        "title": "Sweeney-Baird Christina",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asweeney-baird-christina&format=json"
+    },
+    {
+        "title": "Boye Karin",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aboye-karin&format=json"
+    },
+    {
+        "title": "Doherty Paul C.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adoherty-paul-c&format=json"
+    },
+    {
+        "title": "Guin Ursula Le",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aguin-ursula-le&format=json"
+    },
+    {
+        "title": "Mourlevat Jean-Claude",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amourlevat-jean-claude&format=json"
+    },
+    {
+        "title": "Herbert Frank",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aherbert-frank&format=json"
+    },
+    {
+        "title": "Paolini Christopher",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apaolini-christopher&format=json"
+    },
+    {
+        "title": "Klune T. J.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aklune-t-j&format=json"
+    },
+    {
+        "title": "Barjavel René",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abarjavel-rene&format=json"
+    },
+    {
+        "title": "Murray H. S.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amurray-h-s&format=json"
+    },
+    {
+        "title": "Shirreffs Gordon D.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ashirreffs-gordon-d&format=json"
+    },
+    {
+        "title": "Zelazny Roger",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Azelazny-roger&format=json"
+    },
+    {
+        "title": "Niven Larry",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aniven-larry&format=json"
+    },
+    {
+        "title": "Pournelle Jerry",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apournelle-jerry&format=json"
+    },
+    {
+        "title": "Cole Jackson",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acole-jackson&format=json"
+    },
+    {
+        "title": "Lafleuriel Erwan",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alafleuriel-erwan&format=json"
+    },
+    {
+        "title": "Sapkowski Andrzej",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asapkowski-andrzej&format=json"
+    },
+    {
+        "title": "Anderson Poul",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aanderson-poul&format=json"
+    },
+    {
+        "title": "Hogan Ray",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahogan-ray&format=json"
+    },
+    {
+        "title": "Baxter Stephen",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abaxter-stephen&format=json"
+    },
+    {
+        "title": "Tournier Michel",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Atournier-michel&format=json"
+    },
+    {
+        "title": "Backman Fredrik",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abackman-fredrik&format=json"
+    },
+    {
+        "title": "Murakami Haruki",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amurakami-haruki&format=json"
+    },
+    {
+        "title": "David Michel",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adavid-michel&format=json"
+    },
+    {
+        "title": "Preston Douglas",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apreston-douglas&format=json"
+    },
+    {
+        "title": "Child Lincoln",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Achild-lincoln&format=json"
+    },
+    {
+        "title": "Robillard Anne",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Arobillard-anne&format=json"
+    },
+    {
+        "title": "Robillard Claudia",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Arobillard-claudia&format=json"
+    },
+    {
+        "title": "Colfer Eoin",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acolfer-eoin&format=json"
+    },
+    {
+        "title": "Jubert Hervé",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ajubert-herve&format=json"
+    },
+    {
+        "title": "MacHale D. J.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amac-hale-d-j&format=json"
+    },
+    {
+        "title": "Frost Jeaniene",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Afrost-jeaniene&format=json"
+    },
+    {
+        "title": "Muchamore Robert",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amuchamore-robert&format=json"
+    },
+    {
+        "title": "Bourne J. L.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abourne-j-l&format=json"
+    },
+    {
+        "title": "Troisi Licia",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Atroisi-licia&format=json"
+    },
+    {
+        "title": "Arnaud Georges-Jean",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aarnaud-georges-jean&format=json"
+    },
+    {
+        "title": "L'Homme Erik",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Al-homme-erik&format=json"
+    },
+    {
+        "title": "Kervran Yann",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Akervran-yann&format=json"
+    },
+    {
+        "title": "Bondoux Anne-Laure",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abondoux-anne-laure&format=json"
+    },
+    {
+        "title": "Cixin Liu",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acixin-liu&format=json"
+    },
+    {
+        "title": "Corey James S. A.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acorey-james-s-a&format=json"
+    },
+    {
+        "title": "Delaney Joseph",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adelaney-joseph&format=json"
+    },
+    {
+        "title": "Bardugo Leigh",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abardugo-leigh&format=json"
+    },
+    {
+        "title": "Adams Douglas",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aadams-douglas&format=json"
+    },
+    {
+        "title": "Rowling J. K.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Arowling-j-k&format=json"
+    },
+    {
+        "title": "Thorne Jack",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Athorne-jack&format=json"
+    },
+    {
+        "title": "Tiffany John",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Atiffany-john&format=json"
+    },
+    {
+        "title": "Ferrante Elena",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aferrante-elena&format=json"
+    },
+    {
+        "title": "Delanay Joseph",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adelanay-joseph&format=json"
+    },
+    {
+        "title": "Marmen Sonia",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amarmen-sonia&format=json"
+    },
+    {
+        "title": "Hunter Erin",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahunter-erin&format=json"
+    },
+    {
+        "title": "Bujold Lois McMaster",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abujold-lois-mc-master&format=json"
+    },
+    {
+        "title": "Stewart Ian",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Astewart-ian&format=json"
+    },
+    {
+        "title": "Cohen Jack",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acohen-jack&format=json"
+    },
+    {
+        "title": "King Stephen",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aking-stephen&format=json"
+    },
+    {
+        "title": "Stroud Jonathan",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Astroud-jonathan&format=json"
+    },
+    {
+        "title": "Hearn Lian",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahearn-lian&format=json"
+    },
+    {
+        "title": "Adeyemi Tomi",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aadeyemi-tomi&format=json"
+    },
+    {
+        "title": "Ruocchio Christopher",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aruocchio-christopher&format=json"
+    },
+    {
+        "title": "Jacq Christian",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ajacq-christian&format=json"
+    },
+    {
+        "title": "Dabos Christelle",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Adabos-christelle&format=json"
+    },
+    {
+        "title": "Martin George R. R.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amartin-george-r-r&format=json"
+    },
+    {
+        "title": "Nicholson William",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Anicholson-william&format=json"
+    },
+    {
+        "title": "Cook Glen",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Acook-glen&format=json"
+    },
+    {
+        "title": "Grisé Martial",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agrise-martial&format=json"
+    },
+    {
+        "title": "Lewis Clive Staples",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alewis-clive-staples&format=json"
+    },
+    {
+        "title": "Baynes Pauline",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abaynes-pauline&format=json"
+    },
+    {
+        "title": "Barclay James",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abarclay-james&format=json"
+    },
+    {
+        "title": "Snicket Lemony",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asnicket-lemony&format=json"
+    },
+    {
+        "title": "Malet",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Amalet&format=json"
+    },
+    {
+        "title": "Léo",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aleo&format=json"
+    },
+    {
+        "title": "Lore Pittacus",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Alore-pittacus&format=json"
+    },
+    {
+        "title": "Explorer Asp",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aexplorer-asp&format=json"
+    },
+    {
+        "title": "Weber Patrick",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aweber-patrick&format=json"
+    },
+    {
+        "title": "Scott Michael",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ascott-michael&format=json"
+    },
+    {
+        "title": "Jennings Gary",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ajennings-gary&format=json"
+    },
+    {
+        "title": "Glukhovsky Dmitry",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aglukhovsky-dmitry&format=json"
+    },
+    {
+        "title": "Riggs Ransom",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ariggs-ransom&format=json"
+    },
+    {
+        "title": "Smith Alexander McCall",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asmith-alexander-mc-call&format=json"
+    },
+    {
+        "title": "Taylor Dennis E.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ataylor-dennis-e&format=json"
+    },
+    {
+        "title": "Silverberg Robert",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Asilverberg-robert&format=json"
+    },
+    {
+        "title": "C.Clarke Arthur",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ac-clarke-arthur&format=json"
+    },
+    {
+        "title": "Plichota Anne",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aplichota-anne&format=json"
+    },
+    {
+        "title": "Wolf Cendrine",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Awolf-cendrine&format=json"
+    },
+    {
+        "title": "Brussolo Serge",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Abrussolo-serge&format=json"
+    },
+    {
+        "title": "Pouy Jean-Bernard",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Apouy-jean-bernard&format=json"
+    },
+    {
+        "title": "Wilson Daniel H.",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Awilson-daniel-h&format=json"
+    },
+    {
+        "title": "Jaworski Jean-Philippe",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ajaworski-jean-philippe&format=json"
+    },
+    {
+        "title": "Howey Hugh",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Ahowey-hugh&format=json"
+    },
+    {
+        "title": "Evanovich Janet",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Aevanovich-janet&format=json"
+    },
+    {
+        "title": "Gemmell Stella",
+        "url": "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=intitle%3Agemmell-stell&format=json"
+    }
+]

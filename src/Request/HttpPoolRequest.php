@@ -35,6 +35,7 @@ class HttpPoolRequest
         protected int $fullfilledCount = 0,
         protected int $rejectedCount = 0,
         protected ?float $executionTime = null,
+        protected int $diff = 0,
     ) {
     }
 
@@ -61,6 +62,7 @@ class HttpPoolRequest
         $self->fullfilled = $res->get('fullfilled');
         $self->rejected = $res->get('rejected');
         $self->all = $res->get('all');
+        $self->diff = $res->get('diff');
 
         return $self;
     }
@@ -117,6 +119,14 @@ class HttpPoolRequest
     }
 
     /**
+     * Get diff.
+     */
+    public function getDiff(): int
+    {
+        return $this->diff;
+    }
+
+    /**
      * Prepare requests to be executed.
      *
      * @param  Collection<int,HttpPoolRequestItem>  $urls
@@ -170,6 +180,14 @@ class HttpPoolRequest
 
         $color = $this->rejectedCount > 0 ? 'bright-red' : 'bright-green';
         $console->print("  {$this->fullfilledCount} requests fullfilled, {$this->rejectedCount} requests rejected.", $color);
+
+        $fullCount = $this->fullfilledCount + $this->rejectedCount;
+        $diff = 0;
+        if ($fullCount !== $this->requestCount) {
+            $diff = $this->requestCount - $fullCount;
+            $console->print("  On {$this->requestCount} requests, {$diff} requests cannot be executed because URL is not valid.", 'yellow');
+        }
+
         $console->print("  Done in {$execution_time} seconds.");
         $console->newLine();
 
@@ -177,6 +195,7 @@ class HttpPoolRequest
             'fullfilled' => $fullfilled,
             'rejected' => $rejected,
             'all' => $all,
+            'diff' => $diff,
         ]);
     }
 

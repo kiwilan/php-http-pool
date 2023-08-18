@@ -259,20 +259,22 @@ class HttpPoolRequest
         $pool = new Pool($client, $requests, [
             'concurrency' => $this->options->concurrencyMaximum,
             'fulfilled' => function (Response $response, $index) use ($fullfilled, $urls) {
-                $response = $response->withHeader('Origin', $urls->get($index)->url ?? null); // Add Origin header for URL
+                $item = $urls->first(fn (HttpPoolRequestItem $item) => $item->id === $index);
+                $response = $response->withHeader('Origin', $item->url ?? null); // Add Origin header for URL
                 $response = $response->withHeader('ID', $index ?? null);
                 $fullfilled->put($index, $response);
 
                 $this->fullfilledCount++;
             },
             'rejected' => function (mixed $reason, $index) use ($fullfilled, $rejected, $urls) {
-                $type = json_encode([$reason, $index, $urls->get($index)?->url]);
+                $item = $urls->first(fn (HttpPoolRequestItem $item) => $item->id === $index);
+                $type = json_encode([$reason, $index, $item->url]);
                 $message = "HttpPool: one request rejected. {$type}";
                 error_log($message);
                 $response = new Response(
                     status: 500,
                     headers: [
-                        'Origin' => $urls->get($index)?->url ?? null,
+                        'Origin' => $item->url ?? null,
                         'ID' => $index ?? null,
                     ],
                     reason: $reason,

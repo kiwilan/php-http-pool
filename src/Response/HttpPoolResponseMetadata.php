@@ -50,7 +50,11 @@ class HttpPoolResponseMetadata
         $self->date = new DateTime($response->getHeaderLine('Date'));
         $self->contentType = $contentType;
         $self->request = $self->setRequest($response);
-        $self->headers = $response->getHeaders();
+
+        // dump($response->getHeaders());
+        foreach ($response->getHeaders() as $type => $header) {
+            $self->headers[$type] = $response->getHeaderLine($type);
+        }
 
         return $self;
     }
@@ -138,7 +142,7 @@ class HttpPoolResponseMetadata
     /**
      * Get headers.
      *
-     * @return array<string, array<string>>
+     * @return array<string, string>
      */
     public function getHeaders(): array
     {
@@ -150,7 +154,7 @@ class HttpPoolResponseMetadata
      */
     public function getHeader(string $key): ?string
     {
-        return $this->headers[$key][0] ?? null;
+        return $this->headers[$key] ?? null;
     }
 
     /**

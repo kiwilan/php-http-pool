@@ -58,6 +58,7 @@ it('can use associative array', function () {
         ->setUrlKey('wikipedia')
         ->allowPrintConsole();
     $responses = $pool->execute();
+    ray($responses);
 
     expect($responses->getFullfilledCount())->toBe(5);
     expect($responses->getRejectedCount())->toBe(0);
@@ -84,7 +85,10 @@ it('can use associative array', function () {
     expect($item->getMetadata()->getContentType())->toBeString();
     expect($item->getMetadata()->getRequest())->toBeString();
     expect($item->getMetadata()->getHeaders())->toBeArray();
-    expect($item->getMetadata()->getHeader('Origin'))->toBe($item->getMetadata()->getRequest());
+
+    $origin = $item->getMetadata()->getHeader('Origin');
+    expect($origin)->toBe($item->getMetadata()->getRequest());
+    expect($item->getMetadata()->getHeaders()['Origin'])->toBe($origin);
 
     $body = $item->getBody();
     expect($body)->toBeInstanceOf(HttpPoolResponseBody::class);

@@ -2,6 +2,11 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## 0.2.32 - 2023-08-18
+
+- `HttpPoolResponseMetadata` now have headers as `array<string, string>` instead of `array<string, array<string>>`
+- Fix a problem with origin request for `HttpPoolResponseMetadata`
+
 ## 0.2.31 - 2023-08-11
 
 - Allow all URL to be null, to prevent throw errors if a full chunk is not available

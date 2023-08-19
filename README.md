@@ -280,6 +280,7 @@ $first->isBodyAvailable(); // Get if response body exists
 $metadata = $first->getMetadata();
 
 $statusCode = $metadata->getStatusCode(); // 200, 404, 500...
+$status = $metadata->getStatus(); // Guzzle pool status: fullfilled, rejected
 $reason = $metadata->getReason(); // OK, Not Found, Internal Server Error...
 $isSuccess = $metadata->isSuccess(); // 200 <= $statusCode < 300
 $isFailed = $metadata->isFailed(); // status code is not success
@@ -289,8 +290,8 @@ $server = $metadata->getServer(); // Server header
 $date = $metadata->getDate(); // Date header
 $contentType = $metadata->getContentType(); // Content-Type header
 $request = $metadata->getRequest(); // Original request
-$headers = $metadata->getHeaders(); // Original headers
-$header = $metadata->getHeader('Content-Type'); // Original header
+$headers = $metadata->getHeaders(); // Original headers as array<string, string>
+$header = $metadata->getHeader('Content-Type'); // Extract header (safe method)
 ```
 
 ### Body

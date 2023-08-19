@@ -13,8 +13,9 @@ class HttpPoolResponseBody
     public function __construct(
         protected bool $isExists = false,
         protected bool $isJson = false,
-        public bool $isArray = false,
+        protected bool $isArray = false,
         protected bool $isXml = false,
+        protected bool $isHtml = false,
         protected bool $isBinary = false,
         protected ?string $contents = null,
     ) {
@@ -45,6 +46,7 @@ class HttpPoolResponseBody
 
             if (! $self->isJson) {
                 $self->isXml = $self->isValidXml($raw);
+                $self->isHtml = $self->isValidHtml($raw);
             }
         }
         $self->contents = ! empty($raw) ? $raw : null;
@@ -92,6 +94,18 @@ class HttpPoolResponseBody
         return null;
     }
 
+    public function getHtml(): ?\DOMDocument
+    {
+        if ($this->isHtml) {
+            $dom = new \DOMDocument();
+            $dom->loadHTML($this->contents);
+
+            return $dom;
+        }
+
+        return null;
+    }
+
     /**
      * Check if body is `json`.
      */
@@ -101,11 +115,27 @@ class HttpPoolResponseBody
     }
 
     /**
+     * Check if body is `array`.
+     */
+    public function isArray(): bool
+    {
+        return $this->isArray;
+    }
+
+    /**
      * Check if body is `xml`.
      */
     public function isXml(): bool
     {
         return $this->isXml;
+    }
+
+    /**
+     * Check if body is `html`.
+     */
+    public function isHtml(): bool
+    {
+        return $this->isHtml;
     }
 
     /**
@@ -185,6 +215,11 @@ class HttpPoolResponseBody
         libxml_clear_errors();
 
         return empty($errors);
+    }
+
+    private function isValidHtml(mixed $raw): bool
+    {
+        return $raw !== strip_tags($raw);
     }
 
     /**

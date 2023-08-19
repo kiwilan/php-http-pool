@@ -69,6 +69,14 @@ class HttpPoolResponseMetadata
     }
 
     /**
+     * Get status from Guzzle pool: `fullfilled` or `rejected`.
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
      * Get reason from Response.
      */
     public function getReason(): ?string

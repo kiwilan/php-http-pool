@@ -2,6 +2,13 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## 0.3.0 - 2023-08-19
+
+- `HttpPoolFullfilled`: `getFullfilled` and `getRejected` now return a filter of `getResponses` to reduce size of the response, same for `getFullfilledCount` and `getRejectedCount`, add `toArray` method
+- `HttpPoolResponseMetadata` extra headers: `Origin` is now `origin`, `ID` is now `id` and new header `status` is added to get status of Guzzle pool response, add `getStatus` method
+- `HttpPoolResponseBody` remove `isString` method
+- refactoring: reduce complexity of `HttpPool`, `HttpPoolRequest` and `HttpPoolFullfilled`
+
 ## 0.2.32 - 2023-08-18
 
 - `HttpPoolResponseMetadata` now have headers as `array<string, string>` instead of `array<string, array<string>>`

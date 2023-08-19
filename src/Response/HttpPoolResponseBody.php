@@ -16,7 +16,6 @@ class HttpPoolResponseBody
         public bool $isArray = false,
         protected bool $isXml = false,
         protected bool $isBinary = false,
-        protected bool $isString = false,
         protected ?string $contents = null,
     ) {
     }
@@ -70,7 +69,7 @@ class HttpPoolResponseBody
     }
 
     /**
-     * Body as `object`.
+     * Body as JSON object.
      */
     public function getJson(): ?object
     {
@@ -115,14 +114,6 @@ class HttpPoolResponseBody
     public function isBinary(): bool
     {
         return $this->isBinary;
-    }
-
-    /**
-     * Check if body is `string`.
-     */
-    public function isString(): bool
-    {
-        return $this->isString;
     }
 
     /**

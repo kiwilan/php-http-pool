@@ -224,8 +224,6 @@ class HttpPool
         }
 
         $responses = collect([]);
-        $fullfilled = collect([]);
-        $rejected = collect([]);
         $executionTime = null;
 
         try {
@@ -237,10 +235,7 @@ class HttpPool
                 $this->errors[] = 'All requests are failed';
             }
 
-            $responses = $this->toHttpPoolResponse($request->getAll());
-
-            $fullfilled = $responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess());
-            $rejected = $responses->filter(fn (HttpPoolResponse $response) => ! $response->isSuccess());
+            $responses = $this->toHttpPoolResponse($request->getResponses());
 
             if ($request->getDiff()) {
                 $this->errors[] = "Some requests are not executed because URL is not valid: {$request->getDiff()}";
@@ -252,8 +247,6 @@ class HttpPool
         return HttpPoolFullfilled::make(
             pool: $this,
             responses: $responses,
-            fullfilled: $fullfilled,
-            rejected: $rejected,
             executionTime: $executionTime,
         );
     }

@@ -15,13 +15,6 @@ class HttpPoolFullfilled
     protected function __construct(
         protected HttpPool $pool,
         protected Collection $responses,
-        protected Collection $fullfilled,
-        protected Collection $rejected,
-        //
-        protected int $responsesCount = 0,
-        protected int $fullfilledCount = 0,
-        protected int $rejectedCount = 0,
-        //
         protected ?float $executionTime = null,
         protected bool $isFailed = false,
         protected ?array $errors = null,
@@ -31,20 +24,11 @@ class HttpPoolFullfilled
     public static function make(
         HttpPool $pool,
         Collection $responses,
-        Collection $fullfilled,
-        Collection $rejected,
         float $executionTime = null,
     ): self {
         return new self(
             pool: $pool,
             responses: $responses,
-            fullfilled: $fullfilled,
-            rejected: $rejected,
-
-            responsesCount: $responses->count(),
-            fullfilledCount: $fullfilled->count(),
-            rejectedCount: $rejected->count(),
-
             executionTime: $executionTime,
             isFailed: $pool->isFailed(),
             errors: $pool->getErrors(),
@@ -76,7 +60,7 @@ class HttpPoolFullfilled
      */
     public function getFullfilled(): Collection
     {
-        return $this->fullfilled;
+        return $this->responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess());
     }
 
     /**
@@ -86,7 +70,7 @@ class HttpPoolFullfilled
      */
     public function getRejected(): Collection
     {
-        return $this->rejected;
+        return $this->responses->filter(fn (HttpPoolResponse $response) => ! $response->isSuccess());
     }
 
     /**
@@ -94,7 +78,7 @@ class HttpPoolFullfilled
      */
     public function getResponsesCount(): int
     {
-        return $this->responsesCount;
+        return $this->responses->count();
     }
 
     /**
@@ -102,7 +86,7 @@ class HttpPoolFullfilled
      */
     public function getFullfilledCount(): int
     {
-        return $this->fullfilledCount;
+        return $this->responses->filter(fn (HttpPoolResponse $response) => $response->isSuccess())->count();
     }
 
     /**
@@ -110,7 +94,7 @@ class HttpPoolFullfilled
      */
     public function getRejectedCount(): int
     {
-        return $this->rejectedCount;
+        return $this->responses->filter(fn (HttpPoolResponse $response) => ! $response->isSuccess())->count();
     }
 
     /**

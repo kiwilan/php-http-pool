@@ -23,17 +23,13 @@ class HttpPoolRequest
      * @param  Collection<string,HttpPoolRequestItem>  $requests
      * @param  Collection<string,Response>  $fullfilled
      * @param  Collection<string,Response>  $rejected
-     * @param  Collection<string,Response>  $all
+     * @param  Collection<string,Response>  $responses
      */
     protected function __construct(
         protected HttpPoolOptions $options,
         protected Collection $requests,
-        protected Collection $fullfilled,
-        protected Collection $rejected,
-        protected Collection $all,
+        protected Collection $responses,
         protected int $requestCount = 0,
-        protected int $fullfilledCount = 0,
-        protected int $rejectedCount = 0,
         protected ?float $executionTime = null,
         protected int $diff = 0,
     ) {
@@ -49,20 +45,29 @@ class HttpPoolRequest
         $self = new self(
             options: $options,
             requests: collect([]),
-            fullfilled: collect([]),
-            rejected: collect([]),
-            all: collect([]),
+            responses: collect([]),
         );
 
         $self->requests = $requests;
         $self->requestCount = count($requests);
 
-        $res = $self->execute($requests);
+        $self->responses = $self->execute($requests);
+        $self->diff = $self->requestCount - $self->getFullfilledCount();
 
-        $self->fullfilled = $res->get('fullfilled');
-        $self->rejected = $res->get('rejected');
-        $self->all = $res->get('all');
-        $self->diff = $res->get('diff');
+        $console = PrintConsole::make($self->options->allowPrintConsole);
+
+        $color = $self->getRejectedCount() > 0 ? 'bright-red' : 'bright-green';
+        $console->print("  {$self->getFullfilledCount()} requests fullfilled, {$self->getRejectedCount()} requests rejected.", $color);
+
+        $fullCount = $self->getFullfilledCount() + $self->getRejectedCount();
+        $diff = 0;
+        if ($fullCount !== $self->requestCount) {
+            $diff = $self->requestCount - $fullCount;
+            $console->print("  On {$self->requestCount} requests, {$diff} requests cannot be executed because URL is not valid.", 'yellow');
+        }
+
+        $console->print("  Done in {$self->executionTime} seconds.");
+        $console->newLine();
 
         return $self;
     }
@@ -72,17 +77,17 @@ class HttpPoolRequest
      */
     public function getFullfilled(): Collection
     {
-        return $this->fullfilled;
+        return $this->responses->filter(fn (Response $response) => $response->getHeaderLine('status') === 'fullfilled');
     }
 
     public function getFullfilledCount(): int
     {
-        return $this->fullfilledCount;
+        return $this->responses->filter(fn (Response $response) => $response->getHeaderLine('status') === 'fullfilled')->count();
     }
 
     public function getRejectedCount(): int
     {
-        return $this->rejectedCount;
+        return $this->responses->filter(fn (Response $response) => $response->getHeaderLine('status') === 'rejected')->count();
     }
 
     public function getRequestCount(): int
@@ -97,7 +102,7 @@ class HttpPoolRequest
      */
     public function getRejected(): Collection
     {
-        return $this->rejected;
+        return $this->responses->filter(fn (Response $response) => $response->getHeaderLine('status') === 'rejected');
     }
 
     /**
@@ -105,9 +110,9 @@ class HttpPoolRequest
      *
      * @return Collection<string,Response>
      */
-    public function getAll(): Collection
+    public function getResponses(): Collection
     {
-        return $this->all;
+        return $this->responses;
     }
 
     /**
@@ -130,8 +135,9 @@ class HttpPoolRequest
      * Prepare requests to be executed.
      *
      * @param  Collection<int,HttpPoolRequestItem>  $urls
+     * @return Collection<string,mixed>
      */
-    private function execute(Collection $urls)
+    private function execute(Collection $urls): Collection
     {
         $console = PrintConsole::make($this->options->allowPrintConsole);
 
@@ -159,9 +165,7 @@ class HttpPoolRequest
             $console->print("  Pool is limited to {$this->options->poolLimit} from options, {$urls_count} requests will be converted into {$chunks_size} chunks.");
         }
 
-        $fullfilled = collect([]);
-        $rejected = collect([]);
-        $all = collect([]);
+        $responses = collect([]);
 
         foreach ($chunks as $chunk_key => $chunk_items) {
             $chunk_items_count = count($chunk_items);
@@ -169,10 +173,7 @@ class HttpPoolRequest
             $console->print("  Execute {$chunk_items_count} requests from chunk {$current_chunk}/{$chunks_size}...");
 
             $res = $this->pool($chunk_items);
-
-            $fullfilled = $fullfilled->merge($res->get('fullfilled'));
-            $rejected = $rejected->merge($res->get('rejected'));
-            $all = $all->merge($res->get('all'));
+            $responses = $responses->merge($res);
         }
 
         $end_time = microtime(true);
@@ -180,25 +181,7 @@ class HttpPoolRequest
         $execution_time = number_format((float) $execution_time, 2, '.', '');
         $this->executionTime = $execution_time;
 
-        $color = $this->rejectedCount > 0 ? 'bright-red' : 'bright-green';
-        $console->print("  {$this->fullfilledCount} requests fullfilled, {$this->rejectedCount} requests rejected.", $color);
-
-        $fullCount = $this->fullfilledCount + $this->rejectedCount;
-        $diff = 0;
-        if ($fullCount !== $this->requestCount) {
-            $diff = $this->requestCount - $fullCount;
-            $console->print("  On {$this->requestCount} requests, {$diff} requests cannot be executed because URL is not valid.", 'yellow');
-        }
-
-        $console->print("  Done in {$execution_time} seconds.");
-        $console->newLine();
-
-        return collect([
-            'fullfilled' => $fullfilled,
-            'rejected' => $rejected,
-            'all' => $all,
-            'diff' => $diff,
-        ]);
+        return $responses;
     }
 
     /**
@@ -249,24 +232,20 @@ class HttpPoolRequest
             }
         }
 
-        /** @var Collection<int,?Response> */
-        $fullfilled = collect([]);
-
         /** @var Collection<int,?mixed> */
-        $rejected = collect([]);
+        $responses = collect([]);
 
         // Create GuzzleHttp pool.
         $pool = new Pool($client, $requests, [
             'concurrency' => $this->options->concurrencyMaximum,
-            'fulfilled' => function (Response $response, $index) use ($fullfilled, $urls) {
+            'fulfilled' => function (Response $response, $index) use ($responses, $urls) {
                 $item = $urls->first(fn (HttpPoolRequestItem $item) => $item->id === $index);
-                $response = $response->withHeader('Origin', $item->url ?? null); // Add Origin header for URL
-                $response = $response->withHeader('ID', $index ?? null);
-                $fullfilled->put($index, $response);
-
-                $this->fullfilledCount++;
+                $response = $response->withHeader('origin', $item->url ?? null); // Add Origin header for URL
+                $response = $response->withHeader('id', $index ?? null);
+                $response = $response->withHeader('status', 'fullfilled');
+                $responses->put($index, $response);
             },
-            'rejected' => function (mixed $reason, $index) use ($fullfilled, $rejected, $urls) {
+            'rejected' => function (mixed $reason, $index) use ($responses, $urls) {
                 $item = $urls->first(fn (HttpPoolRequestItem $item) => $item->id === $index);
                 $type = json_encode([$reason, $index, $item->url]);
                 $message = "HttpPool: one request rejected. {$type}";
@@ -274,26 +253,19 @@ class HttpPoolRequest
                 $response = new Response(
                     status: 500,
                     headers: [
-                        'Origin' => $item->url ?? null,
-                        'ID' => $index ?? null,
+                        'origin' => $item->url ?? null,
+                        'id' => $index ?? null,
+                        'status' => 'rejected',
                     ],
                     reason: $reason,
                 );
-                $fullfilled->put($index, $response);
-                $rejected->put($index, $response);
-
-                $this->rejectedCount++;
+                $responses->put($index, $response);
             },
         ]);
 
         // Execute pool.
         $pool->promise()->wait();
 
-        $res = collect([]);
-        $res->put('fullfilled', $fullfilled);
-        $res->put('rejected', $rejected);
-        $res->put('all', $fullfilled->merge($rejected));
-
-        return $res;
+        return $responses;
     }
 }

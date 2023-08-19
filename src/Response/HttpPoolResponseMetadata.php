@@ -12,6 +12,7 @@ class HttpPoolResponseMetadata
 {
     protected function __construct(
         protected int $statusCode = 404,
+        protected string $status = 'rejected',
         protected ?string $reason = null,
         protected bool $isSuccess = false,
         protected bool $isFailed = true,
@@ -41,7 +42,8 @@ class HttpPoolResponseMetadata
         $contentType = $response->getHeaderLine('Content-Type');
 
         $self->statusCode = $response->getStatusCode();
-        $self->isSuccess = $self->statusCode >= 200 && $self->statusCode < 300;
+        $self->status = $response->getHeaderLine('status');
+        $self->isSuccess = $self->status === 'fullfilled';
         $self->isFailed = ! $self->isSuccess;
         $self->reason = $response->getReasonPhrase();
         $self->isJson = str_contains($contentType, 'json');
@@ -49,9 +51,8 @@ class HttpPoolResponseMetadata
         $self->server = $response->getHeaderLine('Server');
         $self->date = new DateTime($response->getHeaderLine('Date'));
         $self->contentType = $contentType;
-        $self->request = $self->setRequest($response);
+        $self->request = $response->getHeaderLine('origin');
 
-        // dump($response->getHeaders());
         foreach ($response->getHeaders() as $type => $header) {
             $self->headers[$type] = $response->getHeaderLine($type);
         }
@@ -155,19 +156,5 @@ class HttpPoolResponseMetadata
     public function getHeader(string $key): ?string
     {
         return $this->headers[$key] ?? null;
-    }
-
-    /**
-     * Get query URL from Response.
-     */
-    private function setRequest(?Response $response): ?string
-    {
-        $origin = $response->getHeader('Origin');
-
-        if (array_key_exists(0, $origin)) {
-            return $origin[0];
-        }
-
-        return null;
     }
 }

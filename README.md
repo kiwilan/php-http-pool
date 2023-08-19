@@ -70,29 +70,29 @@ $requests = $pool->getRequests();
 $requestCount = $pool->getRequestCount();
 
 // Execute pool
-$execute = $pool->execute();
+$res = $pool->execute();
 
 // Get responses
-$responses = $execute->getResponses();
+$responses = $res->getResponses();
 
 // Get responses as array
-$responsesArray = $execute->toArray();
+$responsesArray = $res->toArray();
 
 // Get only fullfilled responses
-$fullfilled = $execute->getFullfilledResponses();
+$fullfilled = $res->getFullfilledResponses();
 
 // Get only rejected responses
-$rejected = $execute->getRejectedResponses();
+$rejected = $res->getRejectedResponses();
 
 // Counts
-$fullfilledCount = $execute->getFullfilledCount();
-$rejectedCount = $execute->getRejectedCount();
+$fullfilledCount = $res->getFullfilledCount();
+$rejectedCount = $res->getRejectedCount();
 
 // Get execution time
-$executionTime = $execute->getExecutionTime();
+$executionTime = $res->getExecutionTime();
 
 // Get pool instance
-$pool = $execute->getPool();
+$pool = $res->getPool();
 ```
 
 #### Associative array
@@ -116,13 +116,13 @@ $urls = [
   ],
 ];
 
-$execute = HttpPool::make($urls)
+$res = HttpPool::make($urls)
   ->setIdentifierKey('uuid') // Default is 'id'
   ->setUrlKey('api') // Default is 'url'
   ->execute()
 ;
 
-$first = $execute->getResponses()->first(); // HttpPoolResponse
+$first = $res->getResponses()->first(); // HttpPoolResponse
 $first->getId(); // 100, 125
 ```
 
@@ -134,7 +134,7 @@ Take a Laravel model collection and send requests with `HttpPool`. Here `Book` i
 use App\Models\Book;
 use Kiwilan\HttpPool\HttpPool;
 
-$books = Book::all();
+$books = Book::all(); // `Illuminate\Support\Collection` of `Book`
 
 $pool = HttpPool::make($books)
   ->setUrlKey('google_book_api') // Default is 'url'
@@ -168,12 +168,12 @@ $urls = [
   ),
 ];
 
-$execute = HttpPool::make($urls)
+$res = HttpPool::make($urls)
   ->setIdentifierKey('uuid') // Default is 'id'
   ->execute()
 ;
 
-$first = $execute->getResponses()->first(); // HttpPoolResponse
+$first = $res->getResponses()->first(); // HttpPoolResponse
 $first->getId(); // 100, 125
 ```
 
@@ -185,7 +185,7 @@ To execute pool, you can use `execute()` method.
 use Kiwilan\HttpPool\HttpPool;
 
 $pool = HttpPool::make($urls);
-$execute = $pool->execute();
+$res = $pool->execute();
 ```
 
 `execute()` method returns a `HttpPoolFullfilled` object. You can get pool with `getPool()` method.
@@ -194,9 +194,9 @@ $execute = $pool->execute();
 use Kiwilan\HttpPool\HttpPool;
 
 $pool = HttpPool::make($urls);
-$execute = $pool->execute();
+$res = $pool->execute();
 
-$pool = $execute->getPool();
+$pool = $res->getPool();
 ```
 
 In `HttpPoolFullfilled` object, you can get responses and more features. All methods `getResponses()`,`getFullfilled()`, `getRejected()` are `Illuminate\Support\Collection` of `HttpPoolResponse`.
@@ -205,34 +205,34 @@ In `HttpPoolFullfilled` object, you can get responses and more features. All met
 use Kiwilan\HttpPool\HttpPool;
 
 $pool = HttpPool::make($urls);
-$execute = $pool->execute();
+$res = $pool->execute();
 
 // Get all responses (fullfilled and rejected)
-$responses = $execute->getResponses();
+$responses = $res->getResponses();
 
 // Get only fullfilled responses
-$fullfilled = $execute->getFullfilled();
+$fullfilled = $res->getFullfilled();
 
 // Get only rejected responses
-$rejected = $execute->getRejected();
+$rejected = $res->getRejected();
 
 // Get responses count
-$responsesCount = $execute->getResponsesCount();
+$responsesCount = $res->getResponsesCount();
 
 // Get fullfilled responses count
-$fullfilledCount = $execute->getFullfilledCount();
+$fullfilledCount = $res->getFullfilledCount();
 
 // Get rejected responses count
-$rejectedCount = $execute->getRejectedCount();
+$rejectedCount = $res->getRejectedCount();
 
 // Get execution time
-$executionTime = $execute->getExecutionTime();
+$executionTime = $res->getExecutionTime();
 
 // Get if pool is failed
-$isFailed = $execute->isFailed();
+$isFailed = $res->isFailed();
 
 // Get errors
-$errors = $execute->getErrors();
+$errors = $res->getErrors();
 ```
 
 ### Errors
@@ -248,9 +248,9 @@ $pool = HttpPool::make($urls, throwErrors: false);
 All errors can be found in `getErrors()` method, after pool execution.
 
 ```php
-$execute = $pool->execute();
-$isFailed = $execute->isFailed();
-$errors = $execute->getErrors();
+$res = $pool->execute();
+$isFailed = $res->isFailed();
+$errors = $res->getErrors();
 ```
 
 ### Response
@@ -261,7 +261,7 @@ After pool execution, you can get responses with `getResponses()` method. It ret
 > The first item of `getResponses` could not be the first request you sent. It depends of the response time of each request. But you can retrieve the original request with `getMetadata()->getRequest()` method, the best way to find parent is to define an ID, that you could retrieve it with `getId()` method.
 
 ```php
-$responses = $execute->getResponses();
+$responses = $res->getResponses();
 $first = $responses->first(); // HttpPoolResponse
 
 $first->getId(); // Get original ID

@@ -25,6 +25,7 @@ PHP package with easy-to-use [`GuzzleHttp`](https://docs.guzzlephp.org/en/stable
 -   🚨 Allow handle memory peak: if you have a lot of requests
 -   🗃️ Works with simple arrays, with associative arrays, with array of objects, with Laravel [`Collection`](https://laravel.com/docs/10.x/collections): just define where to get identifier and URL
 -   💬 Optional console output: you can disable it if you don't want to see progress
+-   🚀 Works with any PHP frameworks, `Illuminate\Support\Collection` is a dependency but you can use it without Laravel, `toArray()` method is available after pool execution if you don't want to use `Collection`
 
 ## Installation
 
@@ -73,6 +74,9 @@ $execute = $pool->execute();
 
 // Get responses
 $responses = $execute->getResponses();
+
+// Get responses as array
+$responsesArray = $execute->toArray();
 
 // Get only fullfilled responses
 $fullfilled = $execute->getFullfilledResponses();
@@ -241,15 +245,7 @@ use Kiwilan\HttpPool\HttpPool;
 $pool = HttpPool::make($urls, throwErrors: false);
 ```
 
-All errors can be found in `getErrors()` method.
-
-```php
-// If all pool failed for some reasons
-$isFailed = $pool->isFailed();
-$errors = $pool->getErrors();
-```
-
-Also available after pool execution.
+All errors can be found in `getErrors()` method, after pool execution.
 
 ```php
 $execute = $pool->execute();

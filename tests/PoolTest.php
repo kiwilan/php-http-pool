@@ -67,6 +67,9 @@ it('can use associative array', function () {
     expect($responses->getFullfilled()->isNotEmpty())->toBeTrue();
     expect($responses->getRejected()->isNotEmpty())->toBeFalse();
     expect($responses->getResponses()->isNotEmpty())->toBeTrue();
+    $all = $responses->getResponses();
+    expect($all->toArray())->toBe($responses->toArray());
+
     expect($responses->getExecutionTime())->toBeFloat();
 
     $item = $responses->getResponses()->first();

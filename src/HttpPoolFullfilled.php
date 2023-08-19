@@ -120,4 +120,14 @@ class HttpPoolFullfilled
     {
         return $this->errors;
     }
+
+    /**
+     * All responses, including rejected, as array.
+     *
+     * @return array<mixed,HttpPoolResponse>
+     */
+    public function toArray(): array
+    {
+        return $this->responses->toArray();
+    }
 }

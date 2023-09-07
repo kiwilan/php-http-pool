@@ -73,7 +73,7 @@ class HttpPoolResponseBody
     /**
      * Body as JSON object.
      */
-    public function getJson(): ?object
+    public function getJSON(): ?object
     {
         if ($this->isJson) {
             return json_decode($this->contents);
@@ -85,7 +85,7 @@ class HttpPoolResponseBody
     /**
      * Body as `SimpleXMLElement`.
      */
-    public function getXml(): ?SimpleXMLElement
+    public function getXML(): ?SimpleXMLElement
     {
         if ($this->isXml) {
             return simplexml_load_string($this->contents);
@@ -94,7 +94,7 @@ class HttpPoolResponseBody
         return null;
     }
 
-    public function getHtml(): ?\DOMDocument
+    public function getHTML(): ?\DOMDocument
     {
         if ($this->isHtml) {
             $dom = new \DOMDocument();
@@ -109,7 +109,7 @@ class HttpPoolResponseBody
     /**
      * Check if body is `json`.
      */
-    public function isJson(): bool
+    public function isJSON(): bool
     {
         return $this->isJson;
     }
@@ -125,7 +125,7 @@ class HttpPoolResponseBody
     /**
      * Check if body is `xml`.
      */
-    public function isXml(): bool
+    public function isXML(): bool
     {
         return $this->isXml;
     }
@@ -133,7 +133,7 @@ class HttpPoolResponseBody
     /**
      * Check if body is `html`.
      */
-    public function isHtml(): bool
+    public function isHTML(): bool
     {
         return $this->isHtml;
     }

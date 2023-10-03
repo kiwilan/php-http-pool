@@ -160,7 +160,7 @@ class HttpPoolResponseBody
 
     private function isValidBinary(mixed $raw): bool
     {
-        return false === mb_detect_encoding((string) $raw, null, true);
+        return mb_detect_encoding((string) $raw, null, true) === false;
     }
 
     private function isValidJson(mixed $raw): bool
@@ -171,7 +171,7 @@ class HttpPoolResponseBody
 
         json_decode($raw);
 
-        return JSON_ERROR_NONE === json_last_error();
+        return json_last_error() === JSON_ERROR_NONE;
     }
 
     private function isValidArray(mixed $raw): bool
@@ -182,7 +182,7 @@ class HttpPoolResponseBody
 
         $contents = json_decode($raw, true);
 
-        if (JSON_ERROR_NONE !== json_last_error()) {
+        if (json_last_error() !== JSON_ERROR_NONE) {
             return false;
         }
 
@@ -205,7 +205,7 @@ class HttpPoolResponseBody
             return false;
         }
 
-        if (false !== stripos($content, '<!DOCTYPE html>')) {
+        if (stripos($content, '<!DOCTYPE html>') !== false) {
             return false;
         }
 

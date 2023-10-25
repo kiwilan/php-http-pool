@@ -14,6 +14,7 @@ class HttpPoolOptions
         public int $timeout = 30,
         public int $concurrencyMaximum = 5,
         public bool $allowPrintConsole = false,
+        public array $headers = [],
     ) {
     }
 }

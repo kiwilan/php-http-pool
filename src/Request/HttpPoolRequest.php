@@ -228,7 +228,11 @@ class HttpPoolRequest
 
         foreach ($urls as $item) {
             if ($item->url) {
-                $requests[$item->id] = new Request('GET', $item->url);
+                $requests[$item->id] = new Request(
+                    'GET',
+                    $item->url,
+                    $this->options->headers,
+                );
             }
         }
 

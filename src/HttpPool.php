@@ -104,6 +104,16 @@ class HttpPool
     }
 
     /**
+     * Set option headers for all requests, default is `[]`.
+     */
+    public function setHeaders(array $headers = []): self
+    {
+        $this->options->headers = $headers;
+
+        return $this;
+    }
+
+    /**
      * Set model attribute with id, default is `id`.
      */
     public function setIdentifierKey(string $field = 'id'): self

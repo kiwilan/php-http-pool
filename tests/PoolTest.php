@@ -54,6 +54,10 @@ it('can use associative array', function () {
     }
 
     $pool = HttpPool::make($pool)
+        ->setHeaders([
+            'User-Agent' => 'HttpPool/1.0',
+            'Accept' => 'application/json',
+        ])
         ->setIdentifierKey('name')
         ->setUrlKey('wikipedia')
         ->allowPrintConsole();

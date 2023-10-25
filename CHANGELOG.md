@@ -2,6 +2,10 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## v0.3.1 - 2023-10-25
+
+- Add `setHeaders()` method to `HttpPool` class to allow setting headers for all requests.
+
 ## 0.3.0 - 2023-08-19
 
 - `HttpPoolFullfilled`: `getFullfilled` and `getRejected` now return a filter of `getResponses` to reduce size of the response, same for `getFullfilledCount` and `getRejectedCount`, add `toArray` method

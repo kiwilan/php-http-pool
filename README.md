@@ -63,6 +63,9 @@ $pool = HttpPool::make($urls)
   ->setTimeout(30)
   ->setConcurrencyMaximum(5)
   ->setPoolLimit(250)
+  ->setHeaders([
+    'User-Agent' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  ])
 ;
 
 // Get original requests converted for `HttpPool`

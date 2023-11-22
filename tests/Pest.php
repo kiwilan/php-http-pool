@@ -87,7 +87,7 @@ function wikipediaPageId(string $pageId): string
 }
 
 /**
- * @return array<stdClass>
+ * @return object{uuid:int, name:string, api:string}[]
  */
 function objectUrls(): array
 {

@@ -351,7 +351,7 @@ class HttpPool
         return null;
     }
 
-    private function error(string $message, string $method, Throwable $throwable = null): void
+    private function error(string $message, string $method, ?Throwable $throwable = null): void
     {
         $message = "{$message}. Method: {$method}";
 

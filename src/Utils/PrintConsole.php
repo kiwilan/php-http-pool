@@ -33,6 +33,8 @@ class PrintConsole
             return;
         }
 
+        syslog(LOG_INFO, $message);
+
         $style = new OutputFormatterStyle($color, '', []);
         $this->output->getFormatter()
             ->setStyle('info', $style);

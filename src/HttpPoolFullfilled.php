@@ -24,7 +24,7 @@ class HttpPoolFullfilled
     public static function make(
         HttpPool $pool,
         Collection $responses,
-        float $executionTime = null,
+        ?float $executionTime = null,
     ): self {
         return new self(
             pool: $pool,

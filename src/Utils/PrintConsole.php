@@ -27,7 +27,7 @@ class PrintConsole
     /**
      * @param  string  $color Color can be black, red, green, yellow, blue, magenta, cyan, white, default, gray, bright-red, bright-green, bright-yellow, bright-blue, bright-magenta, bright-cyan, bright-white
      */
-    public function print(string $message, string $color = 'default', Throwable $th = null): void
+    public function print(string $message, string $color = 'default', ?Throwable $th = null): void
     {
         if (! $this->print) {
             return;

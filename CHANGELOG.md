@@ -2,6 +2,11 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## v0.3.2 - 2023-12-23
+
+- add `syslog` for logging
+- update for PHP 8.3
+
 ## v0.3.1 - 2023-10-25
 
 - Add `setHeaders()` method to `HttpPool` class to allow setting headers for all requests.

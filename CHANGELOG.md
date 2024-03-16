@@ -2,6 +2,10 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## v0.3.3 - 2024-03-16
+
+Add support for Laravel 11
+
 ## v0.3.2 - 2023-12-23
 
 - add `syslog` for logging

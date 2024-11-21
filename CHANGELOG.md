@@ -2,6 +2,10 @@
 
 All notable changes to `php-http-pool` will be documented in this file.
 
+## v0.3.4 - 2024-03-16
+
+`symfony/console` allow `v7`
+
 ## v0.3.3 - 2024-03-16
 
 Add support for Laravel 11
